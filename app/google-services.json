@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "984929300842",
+    "project_id": "gimtastic-a0712",
+    "storage_bucket": "gimtastic-a0712.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984929300842:android:7d85e12261d38f2c777513",
+        "android_client_info": {
+          "package_name": "it.matteo.gymtastic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "984929300842-4f8plgs61um92er946no82n1lq227um2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2OIcrRRJD_E5raKdAY_HReOQcGVEac-w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "984929300842-4f8plgs61um92er946no82n1lq227um2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
