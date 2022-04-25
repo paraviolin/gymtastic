@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Gymtastic</string>
+    <string name="login">Login</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="forgotPassword">Forgot password? Reset!</string>
+    <string name="register">Sign-up</string>
+    <string name="reset">Reset</string>
 </resources>
