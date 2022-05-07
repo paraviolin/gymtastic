@@ -1,4 +1,4 @@
-package it.matteo.gymtastic.presentation.auth.login
+package it.matteo.gymtastic.presentation.auth
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import it.matteo.gymtastic.R
@@ -15,7 +16,7 @@ fun AuthScreen(
     title: String,
     onSubmit: (String, String) -> Unit,
     outlinedButtonText: String,
-    buttonTextContent: List<Pair<String, () -> Unit>>
+    buttonTextContent: List<Pair<String, () -> Unit>>,
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -52,6 +53,7 @@ fun AuthScreen(
             onValueChange = {
                 password = it
             },
+            visualTransformation = PasswordVisualTransformation(),
             label = {
                 Text(stringResource(id = R.string.password))
             },
