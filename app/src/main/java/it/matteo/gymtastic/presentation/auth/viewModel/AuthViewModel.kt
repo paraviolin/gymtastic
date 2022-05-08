@@ -1,5 +1,6 @@
 package it.matteo.gymtastic.presentation.auth.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,26 +9,27 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import java.lang.Exception
+import javax.inject.Inject
 
-class AuthViewModel : ViewModel() {
+@HiltViewModel
+class AuthViewModel @Inject constructor() : ViewModel() {
     private var auth: FirebaseAuth = Firebase.auth
-    private val _signedIn = MutableLiveData(auth.currentUser != null)
-    val signedId: LiveData<Boolean> = _signedIn
     private val _loadingState = MutableStateFlow(LoadingState.IDLE)
     val loadingState = _loadingState.asStateFlow()
 
-    private val _user = MutableLiveData<FirebaseUser>(null)
+    private val _user = MutableLiveData<FirebaseUser>(auth.currentUser)
     val user: LiveData<FirebaseUser>
         get() = _user
+
+    fun isLoggedIn() = auth.currentUser != null
 
     fun loadScreen() {
         _loadingState.tryEmit(LoadingState.IDLE)
     }
-
 
     fun signUp(email: String, password: String) {
         _loadingState.tryEmit(LoadingState.LOADING)
@@ -67,5 +69,12 @@ class AuthViewModel : ViewModel() {
             }
 
         }
+    }
+
+    fun logout() {
+        _loadingState.tryEmit(LoadingState.LOADING)
+        auth.signOut()
+        _user.value = null
+        _loadingState.tryEmit(LoadingState.IDLE)
     }
 }

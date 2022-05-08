@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.ExperimentalUnitApi
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -28,14 +29,10 @@ import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 fun LoginScreen(navHostController: NavHostController) {
     val authViewModel: AuthViewModel = viewModel()
     val state by authViewModel.loadingState.collectAsState()
-
     AuthScreen(
         title = stringResource(id = R.string.login),
         onSubmit = { username, password ->
             authViewModel.login(username, password)
-            if (authViewModel.user.value != null) {
-                navHostController.navigate(Screens.Main.name)
-            }
         },
         outlinedButtonText = stringResource(
             id = R.string.login
@@ -54,20 +51,28 @@ fun LoginScreen(navHostController: NavHostController) {
             }
         )
     )
-    if (state == LoadingState.LOADING) {
-        Column(
-            Modifier.fillMaxSize(),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            CircularProgressIndicator()
+    when {
+        state == LoadingState.LOADING -> {
+            Column(
+                Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                CircularProgressIndicator()
+            }
         }
-    } else if (state.msg?.isNotEmpty() == true) {
-        Toast.makeText(
-            LocalContext.current,
-            state.msg,
-            Toast.LENGTH_SHORT
-        ).show()
+        state == LoadingState.LOGGED_IN -> {
+            LocalFocusManager.current.clearFocus()
+            navHostController.navigate(Screens.Main.name)
+            authViewModel.loadScreen()
+        }
+        state.msg?.isNotEmpty() == true -> {
+            Toast.makeText(
+                LocalContext.current,
+                state.msg,
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 }
 

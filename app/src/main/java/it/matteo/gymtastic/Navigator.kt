@@ -1,23 +1,34 @@
 package it.matteo.gymtastic
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import it.matteo.gymtastic.presentation.profile.ProfileScreen
 import it.matteo.gymtastic.presentation.auth.forgotPassword.ForgotPasswordScreen
 import it.matteo.gymtastic.presentation.auth.login.LoginScreen
 import it.matteo.gymtastic.presentation.auth.signup.SignupScreen
+import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.main.MainScreen
+import it.matteo.gymtastic.presentation.workout_detail.WorkoutDetailScreen
 
 @Composable
 fun GymNavigator(
     navHost: NavHostController,
     modifier: Modifier
 ) {
+    val authViewModel: AuthViewModel = viewModel()
+    val startDestination = if (authViewModel.isLoggedIn()) {
+        Screens.Main.name
+    } else {
+        Screens.Login.name
+    }
     NavHost(
         navController = navHost,
-        startDestination = Screens.Login.name,
+        startDestination = startDestination,
         modifier = modifier,
     ) {
         composable(Screens.Login.name) {
@@ -30,7 +41,13 @@ fun GymNavigator(
             SignupScreen(navHostController = navHost)
         }
         composable(Screens.Main.name) {
-            MainScreen()
+            MainScreen(navHostController = navHost)
+        }
+        composable(Screens.Profile.name) {
+            ProfileScreen(navHostController = navHost)
+        }
+        composable(Screens.WorkoutDetail.name) {
+            WorkoutDetailScreen(navHostController = navHost)
         }
     }
 }

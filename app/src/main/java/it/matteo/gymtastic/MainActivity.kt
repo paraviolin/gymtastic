@@ -9,7 +9,6 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
-import it.matteo.gymtastic.presentation.auth.login.LoginScreen
 import it.matteo.gymtastic.ui.theme.GymtasticTheme
 
 class MainActivity : ComponentActivity() {
