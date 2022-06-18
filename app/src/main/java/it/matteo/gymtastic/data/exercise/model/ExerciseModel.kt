@@ -3,8 +3,17 @@ package it.matteo.gymtastic.data.exercise.model
 import kotlin.time.Duration
 
 enum class ExerciseType {
-    aerobic,
-    anaerobic
+    Aerobic,
+    Anaerobic
 }
 
-data class ExerciseModel(val duration: Duration, val name: String, val repetition: Int, val type: ExerciseType)
+data class ExerciseModel(
+    val customExerciseId: String,
+    val exerciseId: String,
+    val name: String,
+    val description: String,
+    val type: ExerciseType,
+    val duration: Duration,
+    val repetition: String,
+    val notes: String
+)
