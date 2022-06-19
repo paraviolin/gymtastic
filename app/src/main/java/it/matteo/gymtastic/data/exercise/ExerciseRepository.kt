@@ -1,14 +1,16 @@
 package it.matteo.gymtastic.data.exercise
 
-import it.matteo.gymtastic.data.exercise.model.ExerciseModel
-import it.matteo.gymtastic.data.user.model.UserModel
+import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 
 interface ExerciseRepository {
-    fun getAllExercises(): List<ExerciseModel>
+    fun getAllExercises(): List<ExerciseEntity>
 
-    fun getExercise(exerciseId: String): ExerciseModel
+    fun getExercise(exerciseId: String): ExerciseEntity?
 
-    fun addExercise(exerciseModel: ExerciseModel)
+    fun addExercise(exerciseEntity: ExerciseEntity)
 
-    fun removeExercise(exerciseModel: ExerciseModel)
+    fun updateExercise(exerciseEntity: ExerciseEntity)
+
+    fun removeExercise(exerciseEntity: ExerciseEntity)
+
 }

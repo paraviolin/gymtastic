@@ -1,4 +1,4 @@
-package it.matteo.gymtastic.data.exercise.model
+package it.matteo.gymtastic.domain.exercise.model
 
 import kotlin.time.Duration
 

@@ -6,12 +6,3 @@ data class ExerciseEntity(
     val description: String,
     val type: String
 )
-
-data class CustomExerciseEntity(
-    val id: String,
-    val duration: String,
-    val repetition: String,
-    val notes: String,
-    val idExercise: String,
-)
-

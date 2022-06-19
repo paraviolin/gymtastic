@@ -26,6 +26,7 @@ fun ProfileScreen(navHostController: NavHostController) {
         ) {
             Text(text = "Welcome ${authViewModel.user.value?.email}")
             Button(onClick = {
+                // TODO remove me
                 val exerciseDto = hashMapOf(
                     "duration" to "10",
                     "name" to "squat",

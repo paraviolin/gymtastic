@@ -1,9 +1,9 @@
-package it.matteo.gymtastic.data.exercise.utils
+package it.matteo.gymtastic.data.utils
 
-import it.matteo.gymtastic.data.exercise.entity.CustomExerciseEntity
+import it.matteo.gymtastic.data.customExercise.entity.CustomExerciseEntity
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
-import it.matteo.gymtastic.data.exercise.model.ExerciseModel
-import it.matteo.gymtastic.data.exercise.model.ExerciseType
+import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
+import it.matteo.gymtastic.domain.exercise.model.ExerciseType
 import kotlin.time.Duration
 
 object ExerciseConverter {
@@ -14,15 +14,19 @@ object ExerciseConverter {
         id = exerciseModel.exerciseId
     )
 
-    fun modelToCustomEntity(exerciseModel: ExerciseModel): CustomExerciseEntity = CustomExerciseEntity(
-        id = exerciseModel.customExerciseId,
-        idExercise = exerciseModel.exerciseId,
-        duration = exerciseModel.duration.toIsoString(),
-        repetition = exerciseModel.repetition,
-        notes = exerciseModel.notes
-    )
+    fun modelToCustomEntity(exerciseModel: ExerciseModel): CustomExerciseEntity =
+        CustomExerciseEntity(
+            id = exerciseModel.customExerciseId,
+            idExercise = exerciseModel.exerciseId,
+            duration = exerciseModel.duration.toIsoString(),
+            repetition = exerciseModel.repetition,
+            notes = exerciseModel.notes
+        )
 
-    fun entityToModel(exerciseEntity: ExerciseEntity, customExerciseEntity: CustomExerciseEntity): ExerciseModel {
+    fun entityToModel(
+        exerciseEntity: ExerciseEntity,
+        customExerciseEntity: CustomExerciseEntity
+    ): ExerciseModel {
         return ExerciseModel(
             duration = Duration.parseIsoString(customExerciseEntity.duration),
             name = exerciseEntity.name,
