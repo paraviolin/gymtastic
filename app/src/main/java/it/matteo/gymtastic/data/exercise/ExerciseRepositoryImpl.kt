@@ -3,7 +3,7 @@ package it.matteo.gymtastic.data.exercise
 import com.google.firebase.firestore.FirebaseFirestore
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
-import it.matteo.gymtastic.data.utils.ExerciseSerializer
+import it.matteo.gymtastic.data.utils.serializers.ExerciseSerializer
 import javax.inject.Inject
 
 class ExerciseRepositoryImpl @Inject private constructor(private val db: FirebaseFirestore) :
@@ -58,7 +58,7 @@ class ExerciseRepositoryImpl @Inject private constructor(private val db: Firebas
         addExercise(exerciseEntity)
     }
 
-    override fun removeExercise(exerciseEntity: ExerciseEntity) {
+    override fun deleteExercise(exerciseEntity: ExerciseEntity) {
         db.collection(_exerciseDocumentName)
             .document(exerciseEntity.id)
             .delete()

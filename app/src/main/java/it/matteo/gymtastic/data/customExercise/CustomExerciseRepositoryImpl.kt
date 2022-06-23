@@ -3,7 +3,7 @@ package it.matteo.gymtastic.data.customExercise
 import com.google.firebase.firestore.FirebaseFirestore
 import it.matteo.gymtastic.data.customExercise.entity.CustomExerciseEntity
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
-import it.matteo.gymtastic.data.utils.ExerciseSerializer
+import it.matteo.gymtastic.data.utils.serializers.ExerciseSerializer
 import javax.inject.Inject
 
 class CustomExerciseRepositoryImpl @Inject private constructor(private val db: FirebaseFirestore): CustomExerciseRepository {

@@ -11,6 +11,6 @@ interface ExerciseRepository {
 
     fun updateExercise(exerciseEntity: ExerciseEntity)
 
-    fun removeExercise(exerciseEntity: ExerciseEntity)
+    fun deleteExercise(exerciseEntity: ExerciseEntity)
 
 }
