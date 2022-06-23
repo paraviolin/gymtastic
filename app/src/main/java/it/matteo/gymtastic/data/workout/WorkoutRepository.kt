@@ -1,14 +1,14 @@
 package it.matteo.gymtastic.data.workout
 
-import it.matteo.gymtastic.data.user.model.UserModel
-import it.matteo.gymtastic.data.workout.model.WorkoutModel
+import it.matteo.gymtastic.data.user.entity.UserEntity
+import it.matteo.gymtastic.data.workout.entity.WorkoutEntity
 
 interface WorkoutRepository {
-    fun getWorkouts(userModel: UserModel): List<WorkoutModel>
+    fun getWorkouts(userEntity: UserEntity): List<WorkoutEntity>
 
-    fun addWorkout(workoutModel: WorkoutModel)
+    fun addWorkout(workoutModel: WorkoutEntity)
 
-    fun removeWorkout(workoutModel: WorkoutModel)
+    fun removeWorkout(workoutModel: WorkoutEntity)
 
-    fun updateWorkout(workoutModel: WorkoutModel)
+    fun updateWorkout(workoutEntity: WorkoutEntity)
 }

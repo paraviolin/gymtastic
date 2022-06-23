@@ -1,4 +1,4 @@
-package it.matteo.gymtastic.data.utils
+package it.matteo.gymtastic.data.utils.converters
 
 import it.matteo.gymtastic.data.customExercise.entity.CustomExerciseEntity
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity

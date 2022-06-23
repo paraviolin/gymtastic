@@ -1,13 +1,13 @@
 package it.matteo.gymtastic.data.user
 
-import it.matteo.gymtastic.data.user.model.UserModel
+import it.matteo.gymtastic.data.user.entity.UserEntity
 
 interface UserRepository {
-    fun addUser(userModel: UserModel)
+    fun addUser(userEntity: UserEntity)
 
-    fun removeUser(userModel: UserModel)
+    fun deleteUser(userEntity: UserEntity)
 
-    fun updateUser(userModel: UserModel)
+    fun updateUser(userEntity: UserEntity)
 
-    fun getUser(email: String): UserModel
+    fun getUser(email: String): UserEntity
 }
