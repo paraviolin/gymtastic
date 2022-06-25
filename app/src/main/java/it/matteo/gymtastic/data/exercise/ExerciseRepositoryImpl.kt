@@ -6,7 +6,7 @@ import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 import it.matteo.gymtastic.data.utils.serializers.ExerciseSerializer
 import javax.inject.Inject
 
-class ExerciseRepositoryImpl @Inject private constructor(private val db: FirebaseFirestore) :
+class ExerciseRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) :
     ExerciseRepository {
     private val _exerciseDocumentName = "exercise"
 
