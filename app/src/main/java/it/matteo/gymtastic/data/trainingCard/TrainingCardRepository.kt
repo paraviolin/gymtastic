@@ -7,6 +7,8 @@ interface TrainingCardRepository {
 
     fun getTrainingCard(id: String): TrainingCardEntity?
 
+    fun getLastTrainingCard(userId: String): TrainingCardEntity?
+
     fun getAllTrainingCards(userId: String): List<TrainingCardEntity>
 
     fun deleteTrainingCard(id: String)

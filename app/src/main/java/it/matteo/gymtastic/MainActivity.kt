@@ -9,10 +9,10 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import dagger.hilt.EntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import it.matteo.gymtastic.ui.theme.GymtasticTheme
 
-@HiltAndroidApp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

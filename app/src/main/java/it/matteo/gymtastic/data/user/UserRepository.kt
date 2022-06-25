@@ -9,5 +9,5 @@ interface UserRepository {
 
     fun updateUser(userEntity: UserEntity)
 
-    fun getUser(email: String): UserEntity
+    fun getUser(id: String): UserEntity?
 }

@@ -3,10 +3,10 @@ package it.matteo.gymtastic.data.trainingCard
 import com.google.firebase.firestore.FirebaseFirestore
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
-import it.matteo.gymtastic.data.utils.converters.TrainingCardSerializer
+import it.matteo.gymtastic.data.utils.serializers.TrainingCardSerializer
 import javax.inject.Inject
 
-class TrainingCardRepositoryImpl @Inject private constructor(val db: FirebaseFirestore) :
+class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) :
     TrainingCardRepository {
     private val _trainingCardDocumentName = "training_card"
 
@@ -26,6 +26,21 @@ class TrainingCardRepositoryImpl @Inject private constructor(val db: FirebaseFir
 
         db.collection(_trainingCardDocumentName)
             .whereEqualTo("id", id)
+            .get()
+            .addOnSuccessListener {
+                trainingCardEntity = TrainingCardSerializer.fromMap(it.first().data)
+            }
+            .addOnFailureListener {
+                throw FirebaseConnectionException()
+            }
+        return trainingCardEntity
+    }
+
+    override fun getLastTrainingCard(userId: String): TrainingCardEntity? {
+        var trainingCardEntity: TrainingCardEntity? = null
+
+        db.collection(_trainingCardDocumentName)
+            .whereEqualTo("id", userId)
             .get()
             .addOnSuccessListener {
                 trainingCardEntity = TrainingCardSerializer.fromMap(it.first().data)

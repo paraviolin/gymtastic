@@ -24,7 +24,6 @@ import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 
 @SuppressLint("StateFlowValueCalledInComposition")
-@OptIn(ExperimentalUnitApi::class)
 @Composable
 fun LoginScreen(navHostController: NavHostController) {
     val authViewModel: AuthViewModel = viewModel()
