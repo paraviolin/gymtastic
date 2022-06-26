@@ -13,6 +13,7 @@ import it.matteo.gymtastic.data.exercise.ExerciseRepository
 import it.matteo.gymtastic.data.exercise.ExerciseRepositoryImpl
 import it.matteo.gymtastic.data.trainingCard.TrainingCardRepository
 import it.matteo.gymtastic.data.trainingCard.TrainingCardRepositoryImpl
+import it.matteo.gymtastic.domain.trainingCard.TrainingCardService
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -24,8 +25,16 @@ object AppModule {
     fun provideFirebaseAuth(): FirebaseAuth = Firebase.auth
 
     @Provides
-    fun provideExerciseRepository(firestore: FirebaseFirestore): ExerciseRepository = ExerciseRepositoryImpl(firestore)
+    fun provideExerciseRepository(firestore: FirebaseFirestore): ExerciseRepository =
+        ExerciseRepositoryImpl(firestore)
 
     @Provides
-    fun provideTrainingCardRepository(firestore: FirebaseFirestore): TrainingCardRepository = TrainingCardRepositoryImpl(firestore)
+    fun provideTrainingCardRepository(firestore: FirebaseFirestore): TrainingCardRepository =
+        TrainingCardRepositoryImpl(firestore)
+
+    @Provides
+    fun provideTrainingCardService(
+        trainingCardRepository: TrainingCardRepository,
+        exerciseRepository: ExerciseRepository
+    ): TrainingCardService = TrainingCardService(trainingCardRepository, exerciseRepository)
 }

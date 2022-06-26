@@ -46,8 +46,8 @@ class TrainingCardService @Inject constructor(
     private suspend fun getExerciseList(trainingCard: TrainingCardEntity): List<ExerciseModel> {
         val exercises = mutableListOf<ExerciseModel>()
 
-        trainingCard.exercises.forEach { exerciseMap ->
-            val exercise = exerciseRepository.getExercise(exerciseMap["id"] as String)
+        trainingCard.exercises.forEach { exerciseId ->
+            val exercise = exerciseRepository.getExercise(exerciseId)
             exercise.first()?.let { exerciseEntity ->
                 exercises.add(ExerciseConverter.toModel(exerciseEntity))
             }

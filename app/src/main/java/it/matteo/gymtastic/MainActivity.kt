@@ -1,4 +1,4 @@
-package it.matteo.gymtastic.presentation
+package it.matteo.gymtastic
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity

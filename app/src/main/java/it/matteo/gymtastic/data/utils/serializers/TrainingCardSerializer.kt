@@ -4,32 +4,22 @@ import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
 
 object TrainingCardSerializer {
     fun toMap(trainingCardEntity: TrainingCardEntity): Map<String, Any> {
-        val exercises = trainingCardEntity.exercises.map {
-            "${it["id"]}"
-        }
-
         return hashMapOf(
             "id" to trainingCardEntity.id,
             "userId" to trainingCardEntity.userId,
-            "exercises" to exercises,
+            "exercises" to trainingCardEntity.exercises,
             "createdAt" to trainingCardEntity.createdAt
         )
     }
 
     fun fromMap(trainingCardMap: Map<String, Any>): TrainingCardEntity {
         val exercisesId = trainingCardMap["exercises"] as List<*>
-        val exercises = mutableListOf<Map<String, Any?>>()
+        val exercises = mutableListOf<String>()
 
         exercisesId.forEach { element ->
-            if (element != null && element::class.simpleName?.contains("Map") == true) {
-                val map = element as Map<*, *>
-                exercises.add(
-                    hashMapOf(
-                        "id" to map["id"],
-                        "name" to map["name"],
-                        "duration" to map["duration"]
-                    )
-                )
+            if (element != null && element::class.simpleName?.contains("String") == true) {
+                val exercise = element as String
+                exercises.add(exercise)
             }
         }
 
