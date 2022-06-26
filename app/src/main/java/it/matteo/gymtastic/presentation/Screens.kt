@@ -1,4 +1,4 @@
-package it.matteo.gymtastic
+package it.matteo.gymtastic.presentation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*

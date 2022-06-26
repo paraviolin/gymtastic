@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import it.matteo.gymtastic.Screens
+import it.matteo.gymtastic.presentation.Screens
 
 @Composable
 fun BottomNavigationBar(navHostController: NavHostController) {

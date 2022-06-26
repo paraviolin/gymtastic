@@ -1,16 +1,18 @@
 package it.matteo.gymtastic.data.exercise
 
+import it.matteo.gymtastic.data.Response
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
+import kotlinx.coroutines.flow.Flow
 
 interface ExerciseRepository {
-    fun getAllExercises(): List<ExerciseEntity>
+    suspend fun getAllExercises(): Flow<List<ExerciseEntity>>
 
-    fun getExercise(exerciseId: String): ExerciseEntity?
+    suspend fun getExercise(exerciseId: String): Flow<ExerciseEntity?>
 
-    fun addExercise(exerciseEntity: ExerciseEntity)
+    suspend fun addExercise(exerciseEntity: ExerciseEntity): Flow<Response<Void?>>
 
-    fun updateExercise(exerciseEntity: ExerciseEntity)
+    suspend fun updateExercise(exerciseEntity: ExerciseEntity): Flow<Response<Void?>>
 
-    fun deleteExercise(exerciseEntity: ExerciseEntity)
+    suspend fun deleteExercise(exerciseEntity: ExerciseEntity): Flow<Response<Void?>>
 
 }

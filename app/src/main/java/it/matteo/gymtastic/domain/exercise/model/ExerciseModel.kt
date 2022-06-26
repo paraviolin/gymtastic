@@ -8,12 +8,9 @@ enum class ExerciseType {
 }
 
 data class ExerciseModel(
-    val customExerciseId: String,
-    val exerciseId: String,
+    val id: String,
     val name: String,
     val description: String,
     val type: ExerciseType,
-    val duration: Duration,
-    val repetition: String,
-    val notes: String
+    val duration: String
 )

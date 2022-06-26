@@ -1,12 +1,12 @@
 package it.matteo.gymtastic
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.profile.ProfileScreen
 import it.matteo.gymtastic.presentation.auth.forgotPassword.ForgotPasswordScreen
 import it.matteo.gymtastic.presentation.auth.login.LoginScreen

@@ -1,13 +1,15 @@
 package it.matteo.gymtastic.data.user
 
+import it.matteo.gymtastic.data.Response
 import it.matteo.gymtastic.data.user.entity.UserEntity
+import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    fun addUser(userEntity: UserEntity)
+    suspend fun addUser(userEntity: UserEntity): Flow<Response<Void?>>
 
-    fun deleteUser(userEntity: UserEntity)
+    suspend fun deleteUser(userEntity: UserEntity): Flow<Response<Void?>>
 
-    fun updateUser(userEntity: UserEntity)
+    suspend fun updateUser(userEntity: UserEntity): Flow<Response<Void?>>
 
-    fun getUser(id: String): UserEntity?
+    suspend fun getUser(id: String): Flow<Response<UserEntity>>
 }

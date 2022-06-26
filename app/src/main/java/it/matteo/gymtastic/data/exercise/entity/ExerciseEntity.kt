@@ -4,5 +4,6 @@ data class ExerciseEntity(
     val id: String,
     val name: String,
     val description: String,
-    val type: String
+    val type: String,
+    val duration: String
 )
