@@ -19,10 +19,6 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(private val trainingCardService: TrainingCardService) :
     ViewModel() {
 
-    init {
-        getTrainingCards()
-    }
-
     private val _trainingCards = MutableLiveData<MutableList<TrainingCardModel>>(mutableListOf())
     val trainingCards: List<TrainingCardModel>
         get() {
@@ -32,15 +28,14 @@ class MainScreenViewModel @Inject constructor(private val trainingCardService: T
     private var _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.LOADING)
     val loadingState = _loadingState.asStateFlow()
 
-     fun getTrainingCards() = viewModelScope.launch {
-        var auth: FirebaseAuth = Firebase.auth
-
-         if (_loadingState == null) {
-             _loadingState = MutableStateFlow(LoadingState.IDLE)
+     fun getTrainingCards() {
+         _loadingState.tryEmit(LoadingState.LOADING)
+         viewModelScope.launch {
+             var auth: FirebaseAuth = Firebase.auth
+             _loadingState.tryEmit(LoadingState.LOADING)
+             val result = trainingCardService.getAllTrainingCards("pippo")
+             _trainingCards.postValue(result as MutableList<TrainingCardModel>?)
+             _loadingState.tryEmit(LoadingState.LOADED)
          }
-        _loadingState.tryEmit(LoadingState.LOADING)
-        val result = trainingCardService.getAllTrainingCards("pippo")
-        _trainingCards.postValue(result as MutableList<TrainingCardModel>?)
-        _loadingState.tryEmit(LoadingState.LOADED)
-    }
+     }
 }
