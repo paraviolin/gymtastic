@@ -1,6 +1,5 @@
 package it.matteo.gymtastic
 
-import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -9,13 +8,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.core.content.ContextCompat
-import androidx.core.view.WindowCompat
 import androidx.navigation.compose.rememberNavController
-import dagger.hilt.EntryPoint
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.HiltAndroidApp
-import it.matteo.gymtastic.GymNavigator
 import it.matteo.gymtastic.ui.theme.GymtasticTheme
 
 @AndroidEntryPoint

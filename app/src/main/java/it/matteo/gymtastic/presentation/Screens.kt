@@ -23,10 +23,13 @@ enum class Screens(
     Main(
         image = Icons.Filled.Star
     ),
-    WorkoutDetail(
-        image = Icons.Default.Info
+    TrainingCards(
+        image = Icons.Default.List
     ),
     Profile(
         image = Icons.Default.Person
     ),
+    WorkoutDetail(
+        image = Icons.Filled.Build
+    )
 }

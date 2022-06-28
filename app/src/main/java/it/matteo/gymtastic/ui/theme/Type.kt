@@ -1,6 +1,7 @@
 package it.matteo.gymtastic.ui.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -21,12 +22,14 @@ val Typography = Typography(
     h5 = TextStyle(
         fontFamily = bebasNeue,
         fontWeight = FontWeight.Bold,
-        fontSize = 40.sp
+        fontSize = 40.sp,
+        color = Yellow200
     ),
     body2 = TextStyle(
         fontFamily = FontFamily(Font(R.font.bebas_neue_regular)),
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 24.sp
+        fontSize = 24.sp,
+        color = Color.Black
     )
     /* Other default text styles to override
     button = TextStyle(

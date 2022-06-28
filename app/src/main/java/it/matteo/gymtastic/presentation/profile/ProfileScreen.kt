@@ -1,17 +1,20 @@
 package it.matteo.gymtastic.presentation.profile
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material.Button
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.common.BottomNavigationBar
 
@@ -24,21 +27,25 @@ fun ProfileScreen(navHostController: NavHostController) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "Welcome ${authViewModel.user.value?.email}")
-            Button(onClick = {
-                // TODO remove me
-                val exerciseDto = hashMapOf(
-                    "duration" to "10",
-                    "name" to "squat",
-                    "repetition" to "4",
-                    "type" to "false",
-                )
-                val db = Firebase.firestore
-                db.collection("exercise").document("esercizio1")
-                    .set(exerciseDto)
-                    .addOnSuccessListener { Log.d("Success", "yayy!") }
-                    .addOnFailureListener { Log.d("Failure", "noo!")}
-            }) {}
+            Text(
+                text = "YOUR PROFILE",
+                modifier = Modifier.padding(16.dp),
+                style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
+            )
+
+
+            Row(modifier = Modifier.padding(16.dp)) {
+                Text(text = "NAME")
+                TextField(modifier = Modifier.padding(horizontal = 16.dp), enabled = false, value = "${authViewModel.user.value?.displayName}", onValueChange = {})
+            }
+
+            Row(modifier = Modifier.padding(16.dp)) {
+                Text(text = "EMAIL")
+                TextField(modifier = Modifier.padding(horizontal = 16.dp), enabled = false, value = "${authViewModel.user.value?.email}", onValueChange = {})
+            }
+
+            // Todo enabled with a switch, value fetch from viewmodel
+
         }
     }
 }

@@ -1,12 +1,8 @@
 package it.matteo.gymtastic.presentation.common
 
-import androidx.compose.material.BottomNavigation
-import androidx.compose.material.BottomNavigationItem
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import it.matteo.gymtastic.presentation.Screens
@@ -15,7 +11,7 @@ import it.matteo.gymtastic.presentation.Screens
 fun BottomNavigationBar(navHostController: NavHostController) {
     val items = listOf(
         Screens.Main,
-        Screens.WorkoutDetail,
+        Screens.TrainingCards,
         Screens.Profile
     )
     BottomNavigation(
@@ -26,8 +22,8 @@ fun BottomNavigationBar(navHostController: NavHostController) {
             BottomNavigationItem(
                 icon = { Icon(item.image, contentDescription = item.name) },
                 label = { Text(text = item.name) },
-                selectedContentColor = White,
-                unselectedContentColor = White.copy(0.4f),
+                selectedContentColor = MaterialTheme.colors.secondary,
+                unselectedContentColor = MaterialTheme.colors.secondary.copy(0.4f),
                 alwaysShowLabel = true,
                 selected = currentRoute == item.name,
                 onClick = {

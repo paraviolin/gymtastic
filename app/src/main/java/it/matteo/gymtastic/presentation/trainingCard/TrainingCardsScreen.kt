@@ -1,7 +1,6 @@
-package it.matteo.gymtastic.presentation.workout_detail
+package it.matteo.gymtastic.presentation.trainingCard
 
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -11,7 +10,7 @@ import androidx.navigation.NavHostController
 import it.matteo.gymtastic.presentation.common.BottomNavigationBar
 
 @Composable
-fun WorkoutDetailScreen(navHostController: NavHostController) {
+fun TrainingCardsScreen(navHostController: NavHostController) {
     val list = listOf(1, 2, 3, 4, 5, 6, 7)
     Scaffold(bottomBar = { BottomNavigationBar(navHostController = navHostController) }){
         LazyColumn(modifier = Modifier.fillMaxHeight()) {
