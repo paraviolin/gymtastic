@@ -34,16 +34,10 @@ fun MainScreen(
 
     Scaffold(bottomBar = { BottomNavigationBar(navHostController) }) {
         Column(
-            verticalArrangement = Arrangement.Center,
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Top,
             horizontalAlignment = CenterHorizontally
         ) {
-
-            Text(
-                text = "YOUR TRAINING CARD",
-                modifier = Modifier.padding(top = 16.dp),
-                style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
-            )
-
             when (state) {
                 LoadingState.LOADING -> {
                     Column(
@@ -57,6 +51,21 @@ fun MainScreen(
                     }
                 }
                 LoadingState.LOADED -> {
+                    Text(
+                        text = "WELCOME BACK,",
+                        modifier = Modifier.padding(top = 16.dp),
+                        style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraLight),
+                    )
+                    Text(
+                        text = mainScreenViewModel.user?.name ?: "",
+                        modifier = Modifier.padding(top = 16.dp),
+                        style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraBold),
+                    )
+                    Text(
+                        text = "YOUR TRAINING CARD",
+                        modifier = Modifier.padding(top = 32.dp),
+                        style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
+                    )
                     mainScreenViewModel.trainingCards.forEach {
                         LazyColumn(modifier = Modifier.padding(bottom = 56.dp)) {
                             items(it.exercises, itemContent = { item ->
@@ -76,7 +85,6 @@ fun MainScreen(
                                                 }
                                             }
                                             launchSingleTop = true
-                                            restoreState = true
                                         }
                                     }
                                 ) {

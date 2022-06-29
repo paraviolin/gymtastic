@@ -6,12 +6,13 @@ import it.matteo.gymtastic.data.Response.*
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.user.entity.UserEntity
 import it.matteo.gymtastic.data.utils.serializers.UserSerializer
+import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore): UserRepository {
-    private val _userDocumentName = "user"
+    private val _userDocumentName = "users"
 
     override suspend fun addUser(userEntity: UserEntity) = flow<Response<Void?>> {
         emit(Loading)
@@ -45,17 +46,19 @@ class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore):
         addUser(userEntity)
     }
 
-    override suspend fun getUser(id: String) = callbackFlow {
-        trySend(Loading)
+    override suspend fun getUser(email: String) = callbackFlow {
 
         db.collection(_userDocumentName)
-            .whereEqualTo("id", id)
+            .whereEqualTo("email", email)
             .get()
             .addOnSuccessListener {
-                trySend((Success(UserSerializer.fromMap(it.first().data))))
+                trySend((UserSerializer.fromMap(it.first().data)))
             }
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
+        awaitClose()
     }
+
+
 }

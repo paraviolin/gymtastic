@@ -30,7 +30,7 @@ fun ProfileScreen(navHostController: NavHostController) {
             Text(
                 text = "YOUR PROFILE",
                 modifier = Modifier.padding(16.dp),
-                style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
+                style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold),
             )
 
 
