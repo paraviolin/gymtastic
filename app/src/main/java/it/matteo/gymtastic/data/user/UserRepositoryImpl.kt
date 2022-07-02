@@ -11,21 +11,18 @@ import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore): UserRepository {
+class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : UserRepository {
     private val _userDocumentName = "users"
 
-    override suspend fun addUser(userEntity: UserEntity) = flow<Response<Void?>> {
-        emit(Loading)
+    override fun addUser(userEntity: UserEntity) {
         val userDto = UserSerializer.toMap(userEntity)
 
-        val result = db.collection(_userDocumentName)
+        db.collection(_userDocumentName)
             .document(userEntity.id)
             .set(userDto)
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
-            .result
-        emit(Success(result))
     }
 
     override suspend fun deleteUser(userEntity: UserEntity) = flow<Response<Void?>> {
@@ -42,9 +39,7 @@ class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore):
         emit(Success(result))
     }
 
-    override suspend fun updateUser(userEntity: UserEntity) = flow<Response<Void?>>{
-        addUser(userEntity)
-    }
+    override fun updateUser(userEntity: UserEntity) = addUser(userEntity)
 
     override suspend fun getUser(email: String) = callbackFlow {
 

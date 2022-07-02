@@ -66,10 +66,12 @@ fun MainScreen(
                         style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
                     )
 
-                    val lastTrainingCardModel = mainScreenViewModel.trainingCards.first()
-                    lastTrainingCardModel.let { card ->
-                        Text(text = "Created ${card.createdAt.toLocalDate()}")
-                        WorkoutList(card = card, navHostController = navHostController)
+                    if (mainScreenViewModel.hasTrainingCards) {
+                        val lastTrainingCardModel = mainScreenViewModel.trainingCards.first()
+                        lastTrainingCardModel.let { card ->
+                            Text(text = "Created ${card.createdAt.toLocalDate()}")
+                            WorkoutList(card = card, navHostController = navHostController)
+                        }
                     }
                 }
             }

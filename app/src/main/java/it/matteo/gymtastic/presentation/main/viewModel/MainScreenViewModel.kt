@@ -56,7 +56,7 @@ class MainScreenViewModel @Inject constructor(
             _user.postValue(user)
             _loadingState.tryEmit(LoadingState.LOADING)
             val result = trainingCardService.getAllTrainingCards(user.name)
-            _trainingCards.postValue(result as MutableList<TrainingCardModel>?)
+            _trainingCards.value = result as MutableList<TrainingCardModel>
             _loadingState.tryEmit(LoadingState.LOADED)
         }
     }
