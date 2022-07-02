@@ -15,7 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.R
-import it.matteo.gymtastic.Screens
+import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.AuthScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState

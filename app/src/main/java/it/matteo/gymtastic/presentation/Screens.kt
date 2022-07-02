@@ -1,4 +1,4 @@
-package it.matteo.gymtastic
+package it.matteo.gymtastic.presentation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -21,12 +21,16 @@ enum class Screens(
         image = Icons.Filled.Edit
     ),
     Main(
-        image = Icons.Filled.Star
+        image = Icons.Filled.Home
     ),
-    WorkoutDetail(
-        image = Icons.Default.Info
+    Workouts(
+        image = Icons.Default.List,
     ),
     Profile(
         image = Icons.Default.Person
     ),
+    WorkoutDetail(
+        image = Icons.Filled.Build
+    ),
+    TrainingCard(image = Icons.Filled.Build)
 }

@@ -4,11 +4,11 @@ import it.matteo.gymtastic.data.user.entity.UserEntity
 import it.matteo.gymtastic.data.workout.entity.WorkoutEntity
 
 interface WorkoutRepository {
-    fun getWorkouts(userEntity: UserEntity): List<WorkoutEntity>
+    suspend fun getWorkouts(userEntity: UserEntity): List<WorkoutEntity>
 
-    fun addWorkout(workoutModel: WorkoutEntity)
+    suspend fun addWorkout(workoutModel: WorkoutEntity)
 
-    fun removeWorkout(workoutModel: WorkoutEntity)
+    suspend fun removeWorkout(workoutModel: WorkoutEntity)
 
-    fun updateWorkout(workoutEntity: WorkoutEntity)
+    suspend fun updateWorkout(workoutEntity: WorkoutEntity)
 }

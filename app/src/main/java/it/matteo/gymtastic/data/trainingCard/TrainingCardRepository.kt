@@ -1,15 +1,17 @@
 package it.matteo.gymtastic.data.trainingCard
 
+import it.matteo.gymtastic.data.Response
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
+import kotlinx.coroutines.flow.Flow
 
 interface TrainingCardRepository {
-    fun addTrainingCard(trainingCardEntity: TrainingCardEntity)
+    suspend fun addTrainingCard(trainingCardEntity: TrainingCardEntity): Flow<Response<Void?>>
 
-    fun getTrainingCard(id: String): TrainingCardEntity?
+    suspend fun getTrainingCard(id: String): Flow<TrainingCardEntity?>
 
-    fun getLastTrainingCard(userId: String): TrainingCardEntity?
+    suspend fun getLastTrainingCard(userId: String): Flow<TrainingCardEntity?>
 
-    fun getAllTrainingCards(userId: String): List<TrainingCardEntity>
+    suspend fun getAllTrainingCards(userId: String): Flow<List<TrainingCardEntity>>
 
-    fun deleteTrainingCard(id: String)
+    suspend fun deleteTrainingCard(id: String): Flow<Response<Void?>>
 }

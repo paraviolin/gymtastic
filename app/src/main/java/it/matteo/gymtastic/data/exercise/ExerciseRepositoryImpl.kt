@@ -1,69 +1,81 @@
 package it.matteo.gymtastic.data.exercise
 
 import com.google.firebase.firestore.FirebaseFirestore
+import it.matteo.gymtastic.data.Response
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 import it.matteo.gymtastic.data.utils.serializers.ExerciseSerializer
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ExerciseRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) :
     ExerciseRepository {
     private val _exerciseDocumentName = "exercise"
 
-    override fun getAllExercises(): List<ExerciseEntity> {
-        val exercises = mutableListOf<ExerciseEntity>()
+    override suspend fun getAllExercises() =
+        callbackFlow<List<ExerciseEntity>> {
+            val exercises = mutableListOf<ExerciseEntity>()
 
-        db.collection(_exerciseDocumentName)
-            .get()
-            .addOnSuccessListener { documents ->
-                documents.forEach { document ->
-                    exercises.add(ExerciseSerializer.exerciseFromMap(document.data))
+            db.collection(_exerciseDocumentName)
+                .get()
+                .addOnSuccessListener { documents ->
+                    documents.forEach { document ->
+                        exercises.add(ExerciseSerializer.exerciseFromMap(document.data))
+                    }
+                    trySend(exercises)
                 }
-            }
-            .addOnFailureListener {
-                throw FirebaseConnectionException()
-            }
+                .addOnFailureListener {
+                    throw FirebaseConnectionException()
+                }
+            awaitClose()
+        }
 
-        return exercises
-    }
+    override suspend fun getExercise(exerciseId: String) =
+        callbackFlow<ExerciseEntity?> {
+            db.collection(_exerciseDocumentName)
+                .whereEqualTo("id", exerciseId)
+                .get()
+                .addOnSuccessListener {
+                    trySend(ExerciseSerializer.exerciseFromMap(it.first().data))
+                }
+                .addOnFailureListener {
+                    throw FirebaseConnectionException()
+                }
+            awaitClose()
+        }
 
-    override fun getExercise(exerciseId: String): ExerciseEntity? {
-        var exerciseEntity: ExerciseEntity? = null
+    override suspend fun addExercise(exerciseEntity: ExerciseEntity) = flow<Response<Void?>> {
+        emit(Response.Loading)
 
-        db.collection(_exerciseDocumentName)
-            .whereEqualTo("id", exerciseId)
-            .get()
-            .addOnSuccessListener {
-                exerciseEntity = ExerciseSerializer.exerciseFromMap(it.first().data)
-            }
-            .addOnFailureListener {
-                throw FirebaseConnectionException()
-            }
-
-        return exerciseEntity
-    }
-
-    override fun addExercise(exerciseEntity: ExerciseEntity) {
         val exerciseDto = ExerciseSerializer.toMap(exerciseEntity)
 
-        db.collection(_exerciseDocumentName)
+        val result = db.collection(_exerciseDocumentName)
             .document(exerciseEntity.id)
             .set(exerciseDto)
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
+            .result
+
+        emit(Response.Success(result))
     }
 
-    override fun updateExercise(exerciseEntity: ExerciseEntity) {
+
+    override suspend fun updateExercise(exerciseEntity: ExerciseEntity) =
         addExercise(exerciseEntity)
-    }
 
-    override fun deleteExercise(exerciseEntity: ExerciseEntity) {
-        db.collection(_exerciseDocumentName)
+    override suspend fun deleteExercise(exerciseEntity: ExerciseEntity) = flow<Response<Void?>> {
+        val result = db.collection(_exerciseDocumentName)
             .document(exerciseEntity.id)
             .delete()
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
+            .result
+        emit(Response.Success(result))
     }
+
+
 }
