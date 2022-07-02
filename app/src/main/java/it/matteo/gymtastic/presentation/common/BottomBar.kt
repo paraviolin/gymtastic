@@ -11,7 +11,7 @@ import it.matteo.gymtastic.presentation.Screens
 fun BottomNavigationBar(navHostController: NavHostController) {
     val items = listOf(
         Screens.Main,
-        Screens.TrainingCards,
+        Screens.Workouts,
         Screens.Profile
     )
     BottomNavigation(

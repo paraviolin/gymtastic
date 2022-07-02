@@ -20,13 +20,23 @@ import javax.inject.Inject
 class MainScreenViewModel @Inject constructor(
     private val trainingCardService: TrainingCardService,
     private val userService: UserService
-) :
-    ViewModel() {
+) : ViewModel() {
     private val _trainingCards = MutableLiveData<MutableList<TrainingCardModel>>(mutableListOf())
     val trainingCards: List<TrainingCardModel>
         get() {
             return _trainingCards.value!!
         }
+
+    private val _lastTrainingCard = MutableLiveData<TrainingCardModel>()
+    val lastTrainingCard: TrainingCardModel?
+        get() = _lastTrainingCard.value!!
+
+    private val _currentTrainingCard = MutableLiveData<TrainingCardModel>()
+    val currentTrainingCard: TrainingCardModel?
+        get() = _currentTrainingCard.value
+
+    val hasTrainingCards: Boolean = trainingCards.isNotEmpty()
+    val hasTrainingCard: Boolean = currentTrainingCard != null
 
     private var _loadingState: MutableStateFlow<LoadingState> =
         MutableStateFlow(LoadingState.LOADING)
@@ -47,6 +57,27 @@ class MainScreenViewModel @Inject constructor(
             _loadingState.tryEmit(LoadingState.LOADING)
             val result = trainingCardService.getAllTrainingCards(user.name)
             _trainingCards.postValue(result as MutableList<TrainingCardModel>?)
+            _loadingState.tryEmit(LoadingState.LOADED)
+        }
+    }
+
+    // todo use it in main screen
+    fun getLastTrainingCard() {
+        viewModelScope.launch {
+            val user = userService.getUserByEmail(auth.currentUser!!.email!!)
+            _user.postValue(user)
+            _loadingState.tryEmit(LoadingState.LOADING)
+            val result = trainingCardService.getLastTrainingCard(user.name)
+            _lastTrainingCard.postValue(result)
+            _loadingState.tryEmit(LoadingState.LOADED)
+        }
+    }
+
+    fun getTrainingCard(cardId: String) {
+        viewModelScope.launch {
+            _loadingState.tryEmit(LoadingState.LOADING)
+            val result = trainingCardService.getTrainingCard(cardId)
+            _currentTrainingCard.postValue(result)
             _loadingState.tryEmit(LoadingState.LOADED)
         }
     }

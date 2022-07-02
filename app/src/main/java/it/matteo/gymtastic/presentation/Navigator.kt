@@ -15,6 +15,7 @@ import it.matteo.gymtastic.presentation.auth.login.LoginScreen
 import it.matteo.gymtastic.presentation.auth.signup.SignupScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.main.MainScreen
+import it.matteo.gymtastic.presentation.trainingCard.DetailCard
 import it.matteo.gymtastic.presentation.trainingCard.TrainingCardsScreen
 import it.matteo.gymtastic.presentation.workoutDetail.WorkoutDetailScreen
 
@@ -49,7 +50,7 @@ fun GymNavigator(
         composable(Screens.Profile.name) {
             ProfileScreen(navHostController = navHost)
         }
-        composable(Screens.TrainingCards.name) {
+        composable(Screens.Workouts.name) {
             TrainingCardsScreen(navHostController = navHost)
         }
         composable(
@@ -57,6 +58,9 @@ fun GymNavigator(
             arguments = listOf(navArgument("id") { type = NavType.StringType })
         ) {
             WorkoutDetailScreen(navHostController = navHost, it.arguments?.getString("id"))
+        }
+        composable("${Screens.TrainingCard.name}/{id}", arguments = listOf(navArgument("id") {type = NavType.StringType})) {
+            DetailCard(navHostController = navHost, cardId = it.arguments?.getString("id"))
         }
     }
 }

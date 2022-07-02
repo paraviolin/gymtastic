@@ -1,5 +1,7 @@
 package it.matteo.gymtastic.domain.trainingCard
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import it.matteo.gymtastic.data.exercise.ExerciseRepository
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 import it.matteo.gymtastic.data.trainingCard.TrainingCardRepository

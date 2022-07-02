@@ -3,6 +3,7 @@ package it.matteo.gymtastic.presentation.workoutDetail
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -26,7 +27,19 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
     val exercise = workoutDetailViewModel.exercise
     val state by workoutDetailViewModel.loadingState.collectAsState()
 
-    Scaffold(bottomBar = { BottomNavigationBar(navHostController) }) {
+    Scaffold(topBar = {
+        TopAppBar(
+            modifier = Modifier,
+            title = { Text(text = "")},
+            navigationIcon = {
+                if (navHostController.previousBackStackEntry != null) {
+                    IconButton(onClick = { navHostController.navigateUp() }) {
+                        Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
+                    }
+                }
+            }
+        )
+    }) {
 
         when(state) {
             LoadingState.LOADING ->

@@ -21,15 +21,16 @@ enum class Screens(
         image = Icons.Filled.Edit
     ),
     Main(
-        image = Icons.Filled.Star
+        image = Icons.Filled.Home
     ),
-    TrainingCards(
-        image = Icons.Default.List
+    Workouts(
+        image = Icons.Default.List,
     ),
     Profile(
         image = Icons.Default.Person
     ),
     WorkoutDetail(
         image = Icons.Filled.Build
-    )
+    ),
+    TrainingCard(image = Icons.Filled.Build)
 }

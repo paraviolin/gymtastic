@@ -23,10 +23,11 @@ class WorkoutDetailViewModel @Inject constructor(private val exerciseService: Ex
     private var _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.LOADING)
     val loadingState = _loadingState.asStateFlow()
 
+    val hasData: Boolean = exercise != null && loadingState.value == LoadingState.LOADED
+
     fun getExerciseDetail(exerciseId: String) {
         _loadingState.tryEmit(LoadingState.LOADING)
         viewModelScope.launch {
-            _loadingState.tryEmit(LoadingState.LOADING)
             val result = exerciseService.getExercise(exerciseId)
             _exercise.postValue(result)
             _loadingState.tryEmit(LoadingState.LOADED)

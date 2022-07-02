@@ -45,6 +45,7 @@ class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFir
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
+        awaitClose()
     }
 
     override suspend fun getLastTrainingCard(userId: String) =
@@ -53,11 +54,13 @@ class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFir
                 .whereEqualTo("id", userId)
                 .get()
                 .addOnSuccessListener {
-                    trySend(TrainingCardSerializer.fromMap(it.first().data))
+                    if (it.first().data.isNotEmpty())
+                        trySend(TrainingCardSerializer.fromMap(it.first().data))
                 }
                 .addOnFailureListener {
                     throw FirebaseConnectionException()
                 }
+            awaitClose()
         }
 
     override suspend fun getAllTrainingCards(userId: String) =
