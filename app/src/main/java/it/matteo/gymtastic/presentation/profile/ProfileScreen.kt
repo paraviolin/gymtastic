@@ -68,7 +68,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(text = stringResource(R.string.joined), color = Color.DarkGray)
-                    Text(text = profileViewModel.userProfile?.createdAt?.toDate().toString())
+                    Text(text = profileViewModel.userProfile?.createdAt?.toDate()?.toLocaleString() ?: "")
                 }
             }
 
