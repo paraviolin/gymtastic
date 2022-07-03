@@ -12,27 +12,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.unit.DpSize
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TextFieldComponent(
+    modifier: Modifier = Modifier,
     content: String,
     labelName: String,
+    labelFontSize: TextUnit? = null,
     enabled: Boolean = true,
     onValueChange: ((String) -> Unit),
     visualTransformation: VisualTransformation = VisualTransformation.None,
+    shape: Shape? = null
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(modifier = Modifier.padding(16.dp)) {
         TextField(
-            modifier = Modifier.padding(horizontal = 16.dp),
+            modifier = modifier.padding(horizontal = 16.dp),
             enabled = enabled,
             value = content,
             onValueChange = onValueChange,
@@ -41,7 +47,7 @@ fun TextFieldComponent(
                     text = labelName,
                     style = MaterialTheme.typography.body1.copy(
                         MaterialTheme.colors.secondary,
-                        fontSize = 10.sp
+                        fontSize = labelFontSize ?: 10.sp
                     )
                 )
             },
@@ -54,7 +60,7 @@ fun TextFieldComponent(
                 backgroundColor = MaterialTheme.colors.primaryVariant,
                 cursorColor = MaterialTheme.colors.secondary
             ),
-            shape = MaterialTheme.shapes.medium
+            shape = shape ?: MaterialTheme.shapes.medium
         )
     }
 
