@@ -139,11 +139,11 @@ fun ProfileScreen(navHostController: NavHostController) {
                 navHostController.navigate(Screens.Login.name) {
                     navHostController.graph.startDestinationRoute?.let {
                         popUpTo(it) {
-                            saveState = true
+                            saveState = false
                         }
                     }
                     launchSingleTop = true
-                    restoreState = true
+                    restoreState = false
                 }
             }, textLabel = stringResource(R.string.logout))
 

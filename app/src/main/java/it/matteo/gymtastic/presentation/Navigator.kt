@@ -2,6 +2,7 @@ package it.matteo.gymtastic
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -15,6 +16,7 @@ import it.matteo.gymtastic.presentation.auth.login.LoginScreen
 import it.matteo.gymtastic.presentation.auth.signup.SignupScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.main.MainScreen
+import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
 import it.matteo.gymtastic.presentation.trainingCard.DetailCard
 import it.matteo.gymtastic.presentation.trainingCard.TrainingCardsScreen
 import it.matteo.gymtastic.presentation.workoutDetail.WorkoutDetailScreen
@@ -24,7 +26,7 @@ fun GymNavigator(
     navHost: NavHostController,
     modifier: Modifier
 ) {
-    val authViewModel: AuthViewModel = viewModel()
+    val authViewModel: AuthViewModel = hiltViewModel()
     val startDestination = if (authViewModel.isLoggedIn()) {
         Screens.Main.name
     } else {

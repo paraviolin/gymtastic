@@ -2,6 +2,7 @@ package it.matteo.gymtastic.presentation.auth
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -82,7 +83,8 @@ fun AuthScreen(
                 colors = ButtonDefaults.buttonColors(
                     backgroundColor = MaterialTheme.colors.secondary,
                     contentColor = MaterialTheme.colors.primary
-                )
+                ),
+                shape = MaterialTheme.shapes.medium
             ) {
                 Text(text = outlinedButtonText, style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.primary))
             }
@@ -94,12 +96,12 @@ fun AuthScreen(
             ) {
 
                 OutlinedStyledButton(
+                    modifier = Modifier.padding(end = 16.dp),
                     onClick = {
                         buttonTextContent.first().second()
                     },
                     textLabel = buttonTextContent.first().first,
                     textLabelStyle = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary),
-                    Modifier.padding(end = 16.dp)
                 )
 
                 OutlinedStyledButton(

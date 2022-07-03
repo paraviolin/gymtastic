@@ -8,6 +8,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.R
@@ -16,6 +17,7 @@ import it.matteo.gymtastic.presentation.auth.AuthScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 import it.matteo.gymtastic.presentation.common.LoaderComponent
+import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable

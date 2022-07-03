@@ -62,7 +62,7 @@ fun TrainingCardsScreen(
                                 vertical = 8.dp
                             ),
                             elevation = 30.dp,
-                            shape = RoundedCornerShape(15.dp),
+                            shape = MaterialTheme.shapes.medium,
                             backgroundColor = MaterialTheme.colors.secondary,
                             onClick = {
                                 navHostController.navigate("${Screens.TrainingCard.name}/${card.id}")

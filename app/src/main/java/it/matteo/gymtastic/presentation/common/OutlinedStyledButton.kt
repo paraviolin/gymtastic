@@ -13,16 +13,15 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun OutlinedStyledButton(
+    modifier: Modifier = Modifier,
     onClick: () -> Unit,
     textLabel: String,
     textLabelStyle: TextStyle = MaterialTheme.typography.h4,
-    modifier: Modifier = Modifier,
 ) {
     Button(
-
         onClick = onClick,
         border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-        shape = RoundedCornerShape(50),
+        shape = MaterialTheme.shapes.medium,
         modifier = modifier.padding(top = 16.dp)
     ) {
         Text(text = textLabel, style = textLabelStyle)

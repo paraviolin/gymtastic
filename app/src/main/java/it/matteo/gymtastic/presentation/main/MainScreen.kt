@@ -29,9 +29,6 @@ fun MainScreen(
 
     val state by mainScreenViewModel.loadingState.collectAsState()
     mainScreenViewModel.getTrainingCards()
-    val cards = remember {
-        mutableStateOf(mainScreenViewModel.trainingCards)
-    }
 
     Scaffold(bottomBar = { BottomNavigationBar(navHostController) }) {
         Column(
@@ -58,8 +55,8 @@ fun MainScreen(
                         style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
                     )
 
-                    if (cards.value.isNotEmpty()) {
-                        val lastTrainingCardModel = cards.value.first()
+                    if (mainScreenViewModel.trainingCards.isNotEmpty()) {
+                        val lastTrainingCardModel = mainScreenViewModel.trainingCards.first()
                         lastTrainingCardModel.let { card ->
                             Text(text = "Created ${card.createdAt.toLocalDate()}")
                             WorkoutList(card = card, navHostController = navHostController)
