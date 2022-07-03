@@ -49,16 +49,19 @@ class MainScreenViewModel @Inject constructor(
         get() = _user.value
 
 
-    fun getTrainingCards() {
-        _loadingState.tryEmit(LoadingState.LOADING)
+    @JvmName("getTrainingCards1")
+    fun getTrainingCards(): MutableList<TrainingCardModel> {
+        var values = mutableListOf<TrainingCardModel>()
         viewModelScope.launch {
             val user = userService.getUserByEmail(auth.currentUser!!.email!!)
             _user.postValue(user)
             _loadingState.tryEmit(LoadingState.LOADING)
             val result = trainingCardService.getAllTrainingCards(user.name)
             _trainingCards.value = result as MutableList<TrainingCardModel>
+            values = _trainingCards.value!!
             _loadingState.tryEmit(LoadingState.LOADED)
         }
+        return values
     }
 
     // todo use it in main screen

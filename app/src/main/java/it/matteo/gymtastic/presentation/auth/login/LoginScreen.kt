@@ -5,15 +5,19 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.R
@@ -21,6 +25,7 @@ import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.AuthScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
+import it.matteo.gymtastic.presentation.common.LoaderComponent
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable
@@ -50,15 +55,7 @@ fun LoginScreen(navHostController: NavHostController) {
         )
     )
     when {
-        state == LoadingState.LOADING -> {
-            Column(
-                Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-        }
+        state == LoadingState.LOADING -> LoaderComponent()
         state == LoadingState.LOGGED_IN -> {
             LocalFocusManager.current.clearFocus()
             navHostController.navigate(Screens.Main.name)
