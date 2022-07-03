@@ -6,21 +6,27 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Divider
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun TextFieldComponent(content: String, labelName: String, enabled: Boolean, onValueChange: ((String) -> Unit)) {
+fun TextFieldComponent(
+    content: String,
+    labelName: String,
+    enabled: Boolean = true,
+    onValueChange: ((String) -> Unit),
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(modifier = Modifier.padding(16.dp)) {
@@ -32,13 +38,20 @@ fun TextFieldComponent(content: String, labelName: String, enabled: Boolean, onV
             label = {
                 Text(
                     text = labelName,
-                    style = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary)
+                    style = MaterialTheme.typography.body1.copy(
+                        MaterialTheme.colors.secondary,
+                        fontSize = 10.sp
+                    )
                 )
             },
             textStyle = MaterialTheme.typography.h6.copy(fontFamily = MaterialTheme.typography.h4.fontFamily),
             keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
             keyboardActions = KeyboardActions(
-                onDone = {keyboardController?.hide()})
+                onDone = { keyboardController?.hide() }),
+            visualTransformation = visualTransformation,
+            colors = TextFieldDefaults.textFieldColors(
+                backgroundColor = MaterialTheme.colors.primaryVariant,
+            )
         )
     }
 

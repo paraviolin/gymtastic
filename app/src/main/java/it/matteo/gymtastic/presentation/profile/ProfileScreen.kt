@@ -1,8 +1,6 @@
 package it.matteo.gymtastic.presentation.profile
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -10,12 +8,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import it.matteo.gymtastic.R
+import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.common.BottomNavigationBar
+import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
 import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 import it.matteo.gymtastic.presentation.profile.viewModel.ProfileViewModel
 
@@ -48,7 +50,7 @@ fun ProfileScreen(navHostController: NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "YOUR PROFILE",
+                text = stringResource(R.string.your_profile),
                 modifier = Modifier.padding(16.dp),
                 style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold),
             )
@@ -65,7 +67,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                         .width(1.dp),
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
-                    Text(text = "Joined", color = Color.DarkGray)
+                    Text(text = stringResource(R.string.joined), color = Color.DarkGray)
                     Text(text = profileViewModel.userProfile?.createdAt?.toDate().toString())
                 }
             }
@@ -79,21 +81,21 @@ fun ProfileScreen(navHostController: NavHostController) {
             )
             TextFieldComponent(
                 content = "${profileViewModel.userProfile?.id}",
-                labelName = "ID",
+                labelName = stringResource(R.string.id),
                 enabled = false,
                 onValueChange = {}
             )
 
             TextFieldComponent(
                 content = "${profileViewModel.userProfile?.email}",
-                labelName = "Email",
+                labelName = stringResource(R.string.email),
                 enabled = false,
                 onValueChange = {}
             )
 
             TextFieldComponent(
                 content = nameField.value.toString(),
-                labelName = "Name",
+                labelName = stringResource(R.string.name),
                 enabled = editEnabled.value,
                 onValueChange = {
                     nameField.value = it
@@ -103,7 +105,7 @@ fun ProfileScreen(navHostController: NavHostController) {
 
             TextFieldComponent(
                 content = "${profileViewModel.userProfile?.surname}",
-                labelName = "Surname",
+                labelName = stringResource(R.string.surname),
                 enabled = editEnabled.value,
                 onValueChange = {
                     surnameField.value = it
@@ -116,7 +118,7 @@ fun ProfileScreen(navHostController: NavHostController) {
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Text(
-                    text = "Edit profile",
+                    text = stringResource(R.string.edit_profile),
                     style = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary)
                 )
 
@@ -132,15 +134,18 @@ fun ProfileScreen(navHostController: NavHostController) {
                 )
             }
 
-            // Todo add log out button
-            Button(
-                onClick = { /*TODO*/ },
-                border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
-                shape = RoundedCornerShape(50),
-                modifier = Modifier.padding(top = 16.dp)
-            ) {
-                Text(text = "Log out", style = MaterialTheme.typography.h4)
-            }
+            OutlinedStyledButton(onClick = {
+                authViewModel.logout()
+                navHostController.navigate(Screens.Login.name) {
+                    navHostController.graph.startDestinationRoute?.let {
+                        popUpTo(it) {
+                            saveState = true
+                        }
+                    }
+                    launchSingleTop = true
+                    restoreState = true
+                }
+            }, textLabel = stringResource(R.string.logout))
 
         }
     }
