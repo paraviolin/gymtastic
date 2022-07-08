@@ -49,15 +49,18 @@ class MainScreenViewModel @Inject constructor(
         get() = _user.value
 
 
+    @JvmName("getTrainingCards1")
     fun getTrainingCards() {
-        _loadingState.tryEmit(LoadingState.LOADING)
         viewModelScope.launch {
-            val user = userService.getUserByEmail(auth.currentUser!!.email!!)
-            _user.postValue(user)
-            _loadingState.tryEmit(LoadingState.LOADING)
-            val result = trainingCardService.getAllTrainingCards(user.name)
-            _trainingCards.postValue(result as MutableList<TrainingCardModel>?)
-            _loadingState.tryEmit(LoadingState.LOADED)
+            auth.currentUser?.let {
+                val user = userService.getUserByEmail(it.email!!)
+                _user.postValue(user)
+                _loadingState.tryEmit(LoadingState.LOADING)
+                val result = trainingCardService.getAllTrainingCards(user.name)
+                _trainingCards.value = result as MutableList<TrainingCardModel>
+                _loadingState.tryEmit(LoadingState.LOADED)
+            }
+
         }
     }
 

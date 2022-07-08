@@ -19,6 +19,7 @@ import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.AuthScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
+import it.matteo.gymtastic.presentation.common.LoaderComponent
 
 @Composable
 fun SignupScreen(navHostController: NavHostController) {
@@ -45,15 +46,7 @@ fun SignupScreen(navHostController: NavHostController) {
         )
     )
     when {
-        state == LoadingState.LOADING -> {
-            Column(
-                Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-        }
+        state == LoadingState.LOADING -> LoaderComponent()
         state == LoadingState.LOADED -> {
             Toast.makeText(
                 LocalContext.current,

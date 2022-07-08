@@ -1,15 +1,23 @@
 package it.matteo.gymtastic.presentation.auth
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import it.matteo.gymtastic.R
+import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
+import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 
 @Composable
 fun AuthScreen(
@@ -22,56 +30,86 @@ fun AuthScreen(
     var password by remember { mutableStateOf("") }
 
     Column(
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = title,
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h3,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 32.dp)
-            )
-        }
-        TextField(
-            value = username,
-            onValueChange = {
-                username = it
-            },
-            label = {
-                Text(stringResource(id = R.string.username))
-            },
-            modifier = Modifier.padding(16.dp)
+        Text(
+            text = title,
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold),
         )
-        TextField(
-            value = password,
+
+        Image(
+            painter = painterResource(id = R.drawable.gym_background),
+            contentDescription = "gym background",
+            modifier = Modifier
+                .height(LocalConfiguration.current.screenHeightDp.dp * 3 / 7)
+                .fillMaxWidth()
+        )
+
+
+        Divider(
+            color = Color.DarkGray,
+            modifier = Modifier
+                .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                .fillMaxWidth()
+                .width(1.dp)
+        )
+        TextFieldComponent(
+            content = username,
+            onValueChange = { username = it },
+            labelName = stringResource(id = R.string.username),
+            enabled = true
+        )
+        TextFieldComponent(
+            content = password,
             onValueChange = {
                 password = it
             },
             visualTransformation = PasswordVisualTransformation(),
-            label = {
-                Text(stringResource(id = R.string.password))
-            },
-            modifier = Modifier.padding(16.dp)
+            labelName = stringResource(id = R.string.password),
+            enabled = true
         )
-        OutlinedButton(
-            onClick = {
-                onSubmit(username, password)
-            }) {
-            Text(text = outlinedButtonText)
-        }
-        TextButton(onClick = {
-            buttonTextContent.first().second()
-        }) {
-            Text(text = buttonTextContent.first().first)
-        }
-        TextButton(onClick = { buttonTextContent[1].second() }) {
-            Text(text = buttonTextContent[1].first)
+        Column(
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+
+            Button(
+                onClick = {
+                    onSubmit(username, password)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.secondary,
+                    contentColor = MaterialTheme.colors.primary
+                ),
+                shape = MaterialTheme.shapes.medium
+            ) {
+                Text(text = outlinedButtonText, style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.primary))
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxHeight()
+                    .padding(bottom = 8.dp),
+                verticalAlignment = Alignment.Top
+            ) {
+
+                OutlinedStyledButton(
+                    modifier = Modifier.padding(end = 16.dp),
+                    onClick = {
+                        buttonTextContent.first().second()
+                    },
+                    textLabel = buttonTextContent.first().first,
+                    textLabelStyle = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary),
+                )
+
+                OutlinedStyledButton(
+                    onClick = { buttonTextContent[1].second() },
+                    textLabel = buttonTextContent[1].first,
+                    textLabelStyle = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary)
+                )
+            }
         }
     }
 }

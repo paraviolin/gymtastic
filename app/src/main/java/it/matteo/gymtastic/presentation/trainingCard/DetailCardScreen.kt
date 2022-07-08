@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
+import it.matteo.gymtastic.presentation.common.LoaderComponent
 import it.matteo.gymtastic.presentation.common.WorkoutList
 import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
 
@@ -32,36 +33,22 @@ fun DetailCard(navHostController: NavHostController, cardId: String?) {
     }
 
     when (state) {
-        LoadingState.LOADING -> {
-            Column(
-                Modifier
-                    .padding(55.dp)
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-        LoadingState.LOADED -> {
-
-            Scaffold(topBar = {
-                TopAppBar(
-                    modifier = Modifier,
-                    title = { Text(text = "") },
-                    navigationIcon = {
-                        if (navHostController.previousBackStackEntry != null) {
-                            IconButton(onClick = { navHostController.navigateUp() }) {
-                                Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
-                            }
+        LoadingState.LOADING -> LoaderComponent()
+        LoadingState.LOADED -> Scaffold(topBar = {
+            TopAppBar(
+                modifier = Modifier,
+                title = { Text(text = "") },
+                navigationIcon = {
+                    if (navHostController.previousBackStackEntry != null) {
+                        IconButton(onClick = { navHostController.navigateUp() }) {
+                            Icon(Icons.Filled.ArrowBack, contentDescription = "Back")
                         }
                     }
-                )
-            }) {
-                mainScreenViewModel.currentTrainingCard?.let {
-                    WorkoutList(card = it, navHostController = navHostController) }
                 }
-
-        }
+            )
+        }) {
+            mainScreenViewModel.currentTrainingCard?.let {
+                WorkoutList(card = it, navHostController = navHostController) }
+            }
     }
 }

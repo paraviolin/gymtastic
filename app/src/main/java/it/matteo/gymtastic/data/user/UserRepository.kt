@@ -5,11 +5,11 @@ import it.matteo.gymtastic.data.user.entity.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
-    suspend fun addUser(userEntity: UserEntity): Flow<Response<Void?>>
+    fun addUser(userEntity: UserEntity)
 
     suspend fun deleteUser(userEntity: UserEntity): Flow<Response<Void?>>
 
-    suspend fun updateUser(userEntity: UserEntity): Flow<Response<Void?>>
+    fun updateUser(userEntity: UserEntity)
 
     suspend fun getUser(email: String): Flow<UserEntity>
 }

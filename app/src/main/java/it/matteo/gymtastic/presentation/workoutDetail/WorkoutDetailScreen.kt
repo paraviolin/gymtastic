@@ -1,23 +1,27 @@
 package it.matteo.gymtastic.presentation.workoutDetail
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
-import it.matteo.gymtastic.presentation.common.BottomNavigationBar
+import it.matteo.gymtastic.presentation.common.LoaderComponent
+import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 import it.matteo.gymtastic.presentation.workoutDetail.viewModel.WorkoutDetailViewModel
 
 @Composable
@@ -30,7 +34,7 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
     Scaffold(topBar = {
         TopAppBar(
             modifier = Modifier,
-            title = { Text(text = "")},
+            title = { Text(text = "") },
             navigationIcon = {
                 if (navHostController.previousBackStackEntry != null) {
                     IconButton(onClick = { navHostController.navigateUp() }) {
@@ -41,17 +45,8 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
         )
     }) {
 
-        when(state) {
-            LoadingState.LOADING ->
-                Column(
-                    Modifier
-                        .padding(55.dp)
-                        .fillMaxSize(),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    CircularProgressIndicator()
-                }
+        when (state) {
+            LoadingState.LOADING -> LoaderComponent()
             LoadingState.LOADED ->
                 Column(
                     Modifier.fillMaxSize(),
@@ -63,11 +58,10 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
                         modifier = Modifier.padding(top = 16.dp),
                         style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold),
                     )
-                    Card(
-                        contentColor = MaterialTheme.colors.primary,
-                        shape = MaterialTheme.shapes.small
-                    ) {
-                        Icon(Icons.Default.PlayArrow, contentDescription = "Play")
+
+
+                    Row(horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.Bottom) {
+                        Icon(Icons.Default.DateRange, contentDescription = "Play")
                         Text(
                             text = exercise?.duration ?: "",
                             modifier = Modifier.padding(top = 16.dp),
@@ -75,11 +69,26 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
                             textAlign = TextAlign.Justify
                         )
                     }
-                    Text(
-                        text = exercise?.description ?: "",
-                        modifier = Modifier.padding(top = 16.dp),
-                        style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold),
+
+                    Divider(
+                        color = Color.DarkGray,
+                        modifier = Modifier
+                            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
+                            .fillMaxWidth()
+                            .width(1.dp)
                     )
+
+                    TextFieldComponent(
+                        content = exercise?.description ?: "",
+                        labelName = "Description",
+                        labelFontSize = 16.sp,
+                        onValueChange = {},
+                        modifier = Modifier.padding(horizontal = 32.dp),
+                        enabled = false,
+                        shape = RoundedCornerShape(20),
+
+                    )
+
 
 
                 }
