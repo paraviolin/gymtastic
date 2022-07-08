@@ -17,6 +17,7 @@ import it.matteo.gymtastic.R
 import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.common.BottomNavigationBar
+import it.matteo.gymtastic.presentation.common.LoaderComponent
 import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
 import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 import it.matteo.gymtastic.presentation.profile.viewModel.ProfileViewModel
@@ -31,20 +32,19 @@ fun ProfileScreen(navHostController: NavHostController) {
         mutableStateOf(switchState)
     }
 
-    val nameField = remember {
-        mutableStateOf(profileViewModel.userProfile?.name)
-    }
-    val surnameField = remember {
-        mutableStateOf(profileViewModel.userProfile?.surname)
+    val user = remember {
+        profileViewModel.userProfile
     }
 
     authViewModel.user.value?.let {
         profileViewModel.updateUserProfile(it.email!!)
-        nameField.value = profileViewModel.userProfile?.name
-        surnameField.value = profileViewModel.userProfile?.surname
     }
 
     Scaffold(bottomBar = { BottomNavigationBar(navHostController = navHostController) }) {
+        if (user.value == null) {
+            LoaderComponent()
+            return@Scaffold
+        }
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -68,9 +68,9 @@ fun ProfileScreen(navHostController: NavHostController) {
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(text = stringResource(R.string.joined), color = Color.DarkGray)
-                    Text(text = "${profileViewModel.userProfile?.createdAt?.toLocalDate()?.dayOfMonth} " +
-                            "${profileViewModel.userProfile?.createdAt?.toLocalDate()?.month} " +
-                            "${profileViewModel.userProfile?.createdAt?.toLocalDate()?.year}")
+                    Text(text = "${user.value?.createdAt?.toLocalDate()?.dayOfMonth} " +
+                            "${user.value?.createdAt?.toLocalDate()?.month} " +
+                            "${user.value?.createdAt?.toLocalDate()?.year}")
                 }
             }
 
@@ -82,35 +82,33 @@ fun ProfileScreen(navHostController: NavHostController) {
                     .width(1.dp)
             )
             TextFieldComponent(
-                content = "${profileViewModel.userProfile?.id}",
+                content = "${user.value?.id}",
                 labelName = stringResource(R.string.id),
                 enabled = false,
                 onValueChange = {}
             )
 
             TextFieldComponent(
-                content = "${profileViewModel.userProfile?.email}",
+                content = "${user.value?.email}",
                 labelName = stringResource(R.string.email),
                 enabled = false,
                 onValueChange = {}
             )
 
             TextFieldComponent(
-                content = nameField.value.toString(),
+                content = "${user.value?.name}",
                 labelName = stringResource(R.string.name),
                 enabled = editEnabled.value,
                 onValueChange = {
-                    nameField.value = it
                     profileViewModel.updateName(it)
                 }
             )
 
             TextFieldComponent(
-                content = "${profileViewModel.userProfile?.surname}",
+                content = "${user.value?.surname}",
                 labelName = stringResource(R.string.surname),
                 enabled = editEnabled.value,
                 onValueChange = {
-                    surnameField.value = it
                     profileViewModel.updateSurname(it)
                 }
             )

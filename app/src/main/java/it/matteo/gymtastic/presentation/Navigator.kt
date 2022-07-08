@@ -15,6 +15,7 @@ import it.matteo.gymtastic.presentation.auth.forgotPassword.ForgotPasswordScreen
 import it.matteo.gymtastic.presentation.auth.login.LoginScreen
 import it.matteo.gymtastic.presentation.auth.signup.SignupScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
+import it.matteo.gymtastic.presentation.customerDetail.CustomerDetailScreen
 import it.matteo.gymtastic.presentation.main.MainScreen
 import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
 import it.matteo.gymtastic.presentation.trainingCard.DetailCard
@@ -71,6 +72,11 @@ fun GymNavigator(
         }
 
         // TRAINER
-
+        composable(
+            "${Screens.CustomerDetail.name}/{email}",
+            arguments = listOf(navArgument("email") { type = NavType.StringType })
+        ) {
+            CustomerDetailScreen(navHostController = navHost, it.arguments?.getString("email"))
+        }
     }
 }

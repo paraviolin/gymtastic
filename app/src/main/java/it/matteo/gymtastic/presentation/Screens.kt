@@ -32,5 +32,6 @@ enum class Screens(
     WorkoutDetail(
         image = Icons.Filled.Build
     ),
-    TrainingCard(image = Icons.Filled.Build)
+    TrainingCard(image = Icons.Filled.Build),
+    CustomerDetail(image = Icons.Default.Person)
 }

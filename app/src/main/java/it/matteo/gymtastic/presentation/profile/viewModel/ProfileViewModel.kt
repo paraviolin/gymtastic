@@ -23,9 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(private val userService: UserService) : ViewModel() {
-    private val _userProfile = MutableLiveData<UserModel>()
-    val userProfile: UserModel?
-        get() = _userProfile.value
+    var userProfile = mutableStateOf<UserModel?>(null)
 
     private var _loadingState: MutableStateFlow<LoadingState> =
         MutableStateFlow(LoadingState.LOADING)
@@ -34,15 +32,16 @@ class ProfileViewModel @Inject constructor(private val userService: UserService)
     fun updateUserProfile(email: String) {
         viewModelScope.launch {
             _loadingState.tryEmit(LoadingState.LOADING)
-            val result = userService.getUserByEmail(email)
-            _userProfile.postValue(result)
+            userProfile.value = userService.getUserByEmail(email)
             _loadingState.tryEmit(LoadingState.LOADED)
         }
     }
 
     fun updateName(name: String) {
         viewModelScope.launch {
-            userProfile?.let{
+            userProfile.value?.let{
+                val updatedUser = it.copy(name = name)
+                userProfile.value = updatedUser
                 userService.updateUser(it.copy(name = name))
             }
         }
@@ -50,7 +49,9 @@ class ProfileViewModel @Inject constructor(private val userService: UserService)
 
     fun updateSurname(surname: String) {
         viewModelScope.launch {
-            userProfile?.let{
+            userProfile.value?.let{
+                val updatedUser = it.copy(surname = surname)
+                userProfile.value = updatedUser
                 userService.updateUser(it.copy(surname = surname))
             }
         }

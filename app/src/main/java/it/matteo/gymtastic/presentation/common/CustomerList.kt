@@ -35,7 +35,7 @@ fun CustomerList(customers: List<UserModel>, navHostController: NavHostControlle
                 shape = MaterialTheme.shapes.medium,
                 backgroundColor = MaterialTheme.colors.secondary,
                 onClick = {
-                    //TODO
+                    navHostController.navigate("${Screens.CustomerDetail.name}/${item.email}")
                 }
             ) {
                 Column(
