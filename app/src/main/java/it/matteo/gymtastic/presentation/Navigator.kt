@@ -37,6 +37,7 @@ fun GymNavigator(
         startDestination = startDestination,
         modifier = modifier,
     ) {
+        // AUTH
         composable(Screens.Login.name) {
             LoginScreen(navHostController = navHost)
         }
@@ -46,12 +47,16 @@ fun GymNavigator(
         composable(Screens.Signup.name) {
             SignupScreen(navHostController = navHost)
         }
+
+        // MAIN SCREENS
         composable(Screens.Main.name) {
             MainScreen(navHostController = navHost)
         }
         composable(Screens.Profile.name) {
             ProfileScreen(navHostController = navHost)
         }
+
+        // CUSTOMER
         composable(Screens.Workouts.name) {
             TrainingCardsScreen(navHostController = navHost)
         }
@@ -64,5 +69,8 @@ fun GymNavigator(
         composable("${Screens.TrainingCard.name}/{id}", arguments = listOf(navArgument("id") {type = NavType.StringType})) {
             DetailCard(navHostController = navHost, cardId = it.arguments?.getString("id"))
         }
+
+        // TRAINER
+
     }
 }

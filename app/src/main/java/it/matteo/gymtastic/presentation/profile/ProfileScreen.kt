@@ -68,7 +68,9 @@ fun ProfileScreen(navHostController: NavHostController) {
                 )
                 Column(modifier = Modifier.padding(start = 16.dp)) {
                     Text(text = stringResource(R.string.joined), color = Color.DarkGray)
-                    Text(text = profileViewModel.userProfile?.createdAt?.toDate()?.toLocaleString() ?: "")
+                    Text(text = "${profileViewModel.userProfile?.createdAt?.toLocalDate()?.dayOfMonth} " +
+                            "${profileViewModel.userProfile?.createdAt?.toLocalDate()?.month} " +
+                            "${profileViewModel.userProfile?.createdAt?.toLocalDate()?.year}")
                 }
             }
 

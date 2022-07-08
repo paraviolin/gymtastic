@@ -1,10 +1,7 @@
 package it.matteo.gymtastic.data.utils.serializers
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.google.firebase.Timestamp
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
-import java.time.LocalDateTime
 
 
 object TrainingCardSerializer {
@@ -17,7 +14,6 @@ object TrainingCardSerializer {
         )
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun fromMap(trainingCardMap: Map<String, Any>): TrainingCardEntity {
         val exercisesId = trainingCardMap["exercises"] as List<*>
         val exercises = mutableListOf<String>()

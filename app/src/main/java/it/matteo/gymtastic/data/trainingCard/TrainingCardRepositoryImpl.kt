@@ -69,6 +69,7 @@ class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFir
                 val trainingCards = mutableListOf<TrainingCardEntity>()
 
                 db.collection(_trainingCardDocumentName)
+                    .whereEqualTo("id", userId)
                     .get()
                     .addOnSuccessListener { documents ->
                         documents.forEach { document ->

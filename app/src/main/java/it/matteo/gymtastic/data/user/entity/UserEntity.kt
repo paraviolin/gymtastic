@@ -7,5 +7,6 @@ data class UserEntity(
     val name: String,
     val surname: String,
     val email: String,
-    val createdAt: Timestamp
+    val createdAt: Timestamp,
+    val role: String
 )
