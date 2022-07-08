@@ -1,11 +1,12 @@
-package it.matteo.gymtastic.presentation.customerDetail
+package it.matteo.gymtastic.presentation.customer
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -14,14 +15,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.common.LoaderComponent
 import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
-import it.matteo.gymtastic.presentation.customerDetail.viewModel.CustomerDetailViewModel
+import it.matteo.gymtastic.presentation.customer.viewModel.CustomerViewModel
 import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 
 @Composable
 fun CustomerDetailScreen(navHostController: NavHostController, email: String?) {
-    val customerDetail: CustomerDetailViewModel = hiltViewModel()
+    val customerDetail: CustomerViewModel = hiltViewModel()
     val customer = remember {
         customerDetail.customer
     }
@@ -105,7 +107,10 @@ fun CustomerDetailScreen(navHostController: NavHostController, email: String?) {
                     shape = RoundedCornerShape(20),
                 )
 
-                OutlinedStyledButton(onClick = { /*TODO*/ }, textLabel = "See workouts")
+                OutlinedStyledButton(
+                    onClick = { navHostController.navigate("${Screens.CustomerWorkouts}/${customer.value?.id}") },
+                    textLabel = "See workouts"
+                )
 
             }
         }

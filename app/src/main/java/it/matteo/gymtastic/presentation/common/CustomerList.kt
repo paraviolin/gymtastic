@@ -49,8 +49,6 @@ fun CustomerList(customers: List<UserModel>, navHostController: NavHostControlle
                         text = "${item.surname} ${item.name}",
                         style = MaterialTheme.typography.body2
                     )
-                    Text(text = item.email)
-                    Text(text = "Joined the ${item.createdAt.dayOfMonth} ${item.createdAt.month} ${item.createdAt.year}")
                 }
             }
 

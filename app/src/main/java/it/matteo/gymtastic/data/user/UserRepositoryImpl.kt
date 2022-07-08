@@ -56,6 +56,20 @@ class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) 
         awaitClose()
     }
 
+    override suspend fun getUserById(id: String) = callbackFlow {
+
+        db.collection(_userDocumentName)
+            .whereEqualTo("id", id)
+            .get()
+            .addOnSuccessListener {
+                trySend((UserSerializer.fromMap(it.first().data)))
+            }
+            .addOnFailureListener {
+                throw FirebaseConnectionException()
+            }
+        awaitClose()
+    }
+
     override suspend fun getCustomers() = callbackFlow {
         db.collection(_userDocumentName)
             .whereEqualTo("role", "customer")

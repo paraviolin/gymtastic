@@ -17,6 +17,10 @@ class UserService @Inject constructor(private val userRepository: UserRepository
         return UserConverter.toModel(userRepository.getUser(email).first())
     }
 
+    suspend fun getUserById(id: String): UserModel {
+        return UserConverter.toModel(userRepository.getUserById(id).first())
+    }
+
      fun updateUser(user: UserModel)  {
         userRepository.updateUser(UserConverter.toEntity(user))
     }
