@@ -12,4 +12,6 @@ interface UserRepository {
     fun updateUser(userEntity: UserEntity)
 
     suspend fun getUser(email: String): Flow<UserEntity>
+
+    suspend fun getCustomers(): Flow<List<UserEntity>>
 }

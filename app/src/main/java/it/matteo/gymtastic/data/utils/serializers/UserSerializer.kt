@@ -9,7 +9,8 @@ object UserSerializer {
         "email" to userEntity.email,
         "name" to userEntity.name,
         "surname" to userEntity.surname,
-        "createdAt" to userEntity.createdAt
+        "createdAt" to userEntity.createdAt,
+        "role" to userEntity.role
     )
 
     fun fromMap(userMap: Map<String, Any>): UserEntity {
@@ -18,7 +19,8 @@ object UserSerializer {
             email = if (userMap["email"] != null) userMap["email"] as String else "",
             surname = if (userMap["surname"] != null) userMap["surname"] as String else "",
             name = if (userMap["name"] != null) userMap["name"] as String else "",
-            createdAt = if (userMap["createdAt"] != null) userMap["createdAt"] as Timestamp else Timestamp.now()
+            createdAt = if (userMap["createdAt"] != null) userMap["createdAt"] as Timestamp else Timestamp.now(),
+            role = if (userMap["role"] != null) userMap["role"] as String else "",
         )
     }
 }

@@ -1,11 +1,8 @@
 package it.matteo.gymtastic.presentation.trainingCard
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -31,7 +28,7 @@ fun TrainingCardsScreen(
     val state by mainScreenViewModel.loadingState.collectAsState()
 
     if (!mainScreenViewModel.hasTrainingCards && state.status != LoadingState.Status.SUCCESS) {
-        mainScreenViewModel.getTrainingCards()
+        mainScreenViewModel.fetchTrainingCards()
     }
 
     when (state) {
@@ -55,7 +52,7 @@ fun TrainingCardsScreen(
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = CenterHorizontally
                 ) {
-                    items(mainScreenViewModel.trainingCards, itemContent = { card ->
+                    items(mainScreenViewModel.trainingCards.value, itemContent = { card ->
                         Card(
                             modifier = Modifier.padding(
                                 horizontal = 55.dp,

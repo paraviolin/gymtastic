@@ -1,9 +1,6 @@
 package it.matteo.gymtastic.domain.trainingCard
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import it.matteo.gymtastic.data.exercise.ExerciseRepository
-import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 import it.matteo.gymtastic.data.trainingCard.TrainingCardRepository
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
 import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
@@ -33,8 +30,8 @@ class TrainingCardService @Inject constructor(
         return TrainingCardConverter.toModel(exercises, trainingCard)
     }
 
-    suspend fun getAllTrainingCards(userId: String): List<TrainingCardModel>? {
-        val trainingCards = trainingCardRepository.getAllTrainingCards(userId).first() ?: return null
+    suspend fun getAllTrainingCards(userId: String): List<TrainingCardModel> {
+        val trainingCards = trainingCardRepository.getAllTrainingCards(userId).first()
 
         val trainingCardModels = mutableListOf<TrainingCardModel>()
 
