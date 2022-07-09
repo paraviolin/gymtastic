@@ -9,9 +9,9 @@ interface ExerciseRepository {
 
     suspend fun getExercise(exerciseId: String): Flow<ExerciseEntity?>
 
-    suspend fun addExercise(exerciseEntity: ExerciseEntity): Flow<Response<Void?>>
+    fun addExercise(exerciseEntity: ExerciseEntity)
 
-    suspend fun updateExercise(exerciseEntity: ExerciseEntity): Flow<Response<Void?>>
+    fun updateExercise(exerciseEntity: ExerciseEntity)
 
     suspend fun deleteExercise(exerciseEntity: ExerciseEntity): Flow<Response<Void?>>
 

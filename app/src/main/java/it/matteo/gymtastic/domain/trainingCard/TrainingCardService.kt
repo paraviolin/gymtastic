@@ -8,6 +8,8 @@ import it.matteo.gymtastic.domain.trainingCard.model.TrainingCardModel
 import it.matteo.gymtastic.domain.utils.ExerciseConverter
 import it.matteo.gymtastic.domain.utils.TrainingCardConverter
 import kotlinx.coroutines.flow.first
+import java.time.LocalDateTime
+import java.util.*
 import javax.inject.Inject
 
 class TrainingCardService @Inject constructor(
@@ -52,6 +54,17 @@ class TrainingCardService @Inject constructor(
             }
         }
         return exercises
+    }
+
+    fun createTrainingCard(listExercises: List<ExerciseModel>, userId: String) {
+        val trainingCard = TrainingCardModel(
+            id = UUID.randomUUID().toString(),
+            userId = userId,
+            listExercises,
+            createdAt = LocalDateTime.now()
+        )
+
+        trainingCardRepository.addTrainingCard(TrainingCardConverter.toEntity(trainingCard))
     }
 
 }

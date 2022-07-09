@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.platform.SoftwareKeyboardController
 import androidx.compose.ui.text.Placeholder
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.VisualTransformation
@@ -37,30 +38,16 @@ fun TextFieldComponent(
     val keyboardController = LocalSoftwareKeyboardController.current
 
     Row(modifier = Modifier.padding(16.dp)) {
-        TextField(
-            modifier = modifier.padding(horizontal = 16.dp),
+        BasicTextField(
+            modifier = modifier,
             enabled = enabled,
-            value = content,
+            content = content,
             onValueChange = onValueChange,
-            label = {
-                Text(
-                    text = labelName,
-                    style = MaterialTheme.typography.body1.copy(
-                        MaterialTheme.colors.secondary,
-                        fontSize = labelFontSize ?: 10.sp
-                    )
-                )
-            },
-            textStyle = MaterialTheme.typography.h6.copy(fontFamily = MaterialTheme.typography.h4.fontFamily),
-            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-            keyboardActions = KeyboardActions(
-                onDone = { keyboardController?.hide() }),
+            labelName = labelName,
+            labelFontSize = labelFontSize,
+            keyboardController = keyboardController,
             visualTransformation = visualTransformation,
-            colors = TextFieldDefaults.textFieldColors(
-                backgroundColor = MaterialTheme.colors.primaryVariant,
-                cursorColor = MaterialTheme.colors.secondary
-            ),
-            shape = shape ?: MaterialTheme.shapes.medium
+            shape = shape
         )
     }
 
@@ -72,4 +59,45 @@ fun TextFieldComponent(
             .width(1.dp)
     )
 
+}
+
+
+@OptIn(ExperimentalComposeUiApi::class)
+@Composable
+fun BasicTextField(
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    content: String,
+    onValueChange: (String) -> Unit,
+    labelName: String,
+    labelFontSize: TextUnit? = null,
+    keyboardController: SoftwareKeyboardController? = LocalSoftwareKeyboardController.current,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    shape: Shape? = null
+) {
+    TextField(
+        modifier = modifier.padding(horizontal = 16.dp),
+        enabled = enabled,
+        value = content,
+        onValueChange = onValueChange,
+        label = {
+            Text(
+                text = labelName,
+                style = MaterialTheme.typography.body1.copy(
+                    MaterialTheme.colors.secondary,
+                    fontSize = labelFontSize ?: 10.sp
+                )
+            )
+        },
+        textStyle = MaterialTheme.typography.h6.copy(fontFamily = MaterialTheme.typography.h4.fontFamily),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = { keyboardController?.hide() }),
+        visualTransformation = visualTransformation,
+        colors = TextFieldDefaults.textFieldColors(
+            backgroundColor = MaterialTheme.colors.primaryVariant,
+            cursorColor = MaterialTheme.colors.secondary
+        ),
+        shape = shape ?: MaterialTheme.shapes.medium
+    )
 }

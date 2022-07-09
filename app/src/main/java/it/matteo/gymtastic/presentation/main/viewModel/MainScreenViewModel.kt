@@ -61,7 +61,7 @@ class MainScreenViewModel @Inject constructor(
             auth.currentUser?.let {
                 user.value = userService.getUserByEmail(it.email!!)
                 _loadingState.tryEmit(LoadingState.LOADING)
-                val result = trainingCardService.getAllTrainingCards(user.value!!.name)
+                val result = trainingCardService.getAllTrainingCards(user.value!!.id)
                 trainingCards.value = result
                 _loadingState.tryEmit(LoadingState.LOADED)
             }

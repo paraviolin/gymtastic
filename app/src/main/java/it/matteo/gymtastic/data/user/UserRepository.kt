@@ -13,5 +13,7 @@ interface UserRepository {
 
     suspend fun getUser(email: String): Flow<UserEntity>
 
+    suspend fun getUserById(id: String): Flow<UserEntity>
+
     suspend fun getCustomers(): Flow<List<UserEntity>>
 }

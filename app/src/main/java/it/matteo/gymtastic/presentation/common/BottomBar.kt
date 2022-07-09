@@ -8,14 +8,17 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import it.matteo.gymtastic.presentation.Screens
 
 @Composable
-fun BottomNavigationBar(navHostController: NavHostController) {
-    val items = listOf(
-        Screens.Main,
-        Screens.Workouts,
-        Screens.Profile
-    )
-    BottomNavigation(
-    ) {
+fun BottomNavigationBar(navHostController: NavHostController, isCustomer: Boolean) {
+    val items = if (isCustomer) {
+        listOf(
+            Screens.Main,
+            Screens.Workouts,
+            Screens.Profile
+        )
+    } else {
+        listOf(Screens.Main, Screens.Exercises, Screens.Profile)
+    }
+    BottomNavigation {
         val navBackStackEntry by navHostController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
         items.forEach { item ->

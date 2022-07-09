@@ -37,7 +37,7 @@ object UserConverter {
     }
 }
 
-private fun LocalDateTime.toInstant(): Instant? {
+fun LocalDateTime.toInstant(): Instant? {
     val currentZone = ZoneId.of("Europe/London").rules.getOffset(Instant.now());
     return this.toInstant(currentZone)
 }

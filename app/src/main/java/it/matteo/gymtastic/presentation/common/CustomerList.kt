@@ -35,7 +35,7 @@ fun CustomerList(customers: List<UserModel>, navHostController: NavHostControlle
                 shape = MaterialTheme.shapes.medium,
                 backgroundColor = MaterialTheme.colors.secondary,
                 onClick = {
-                    //TODO
+                    navHostController.navigate("${Screens.CustomerDetail.name}/${item.email}")
                 }
             ) {
                 Column(
@@ -49,8 +49,6 @@ fun CustomerList(customers: List<UserModel>, navHostController: NavHostControlle
                         text = "${item.surname} ${item.name}",
                         style = MaterialTheme.typography.body2
                     )
-                    Text(text = item.email)
-                    Text(text = "Joined the ${item.createdAt.dayOfMonth} ${item.createdAt.month} ${item.createdAt.year}")
                 }
             }
 

@@ -51,7 +51,7 @@ fun MainScreen(
         mainScreenViewModel.fetchTrainingCards()
     }
 
-    Scaffold(bottomBar = { BottomNavigationBar(navHostController) }) {
+    Scaffold(bottomBar = { BottomNavigationBar(navHostController, !mainScreenViewModel.isTrainer()) }) {
         Column(
             modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Top,

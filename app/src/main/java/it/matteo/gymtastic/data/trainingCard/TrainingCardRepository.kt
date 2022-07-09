@@ -5,7 +5,7 @@ import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
 import kotlinx.coroutines.flow.Flow
 
 interface TrainingCardRepository {
-    suspend fun addTrainingCard(trainingCardEntity: TrainingCardEntity): Flow<Response<Void?>>
+    fun addTrainingCard(trainingCardEntity: TrainingCardEntity)
 
     suspend fun getTrainingCard(id: String): Flow<TrainingCardEntity?>
 
