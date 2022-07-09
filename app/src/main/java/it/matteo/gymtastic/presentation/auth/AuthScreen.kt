@@ -15,12 +15,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import it.matteo.gymtastic.R
+import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
 import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 
 @Composable
 fun AuthScreen(
+    navHostController: NavHostController,
     title: String,
     onSubmit: (String, String) -> Unit,
     outlinedButtonText: String,
@@ -95,12 +98,12 @@ fun AuthScreen(
                 verticalAlignment = Alignment.Top
             ) {
 
-                OutlinedStyledButton(
+/*                OutlinedStyledButton(
                     modifier = Modifier.padding(end = 16.dp),
                     onClick = {
-                        buttonTextContent.first().second()
+                        navHostController.navigate(Screens.Login.name)
                     },
-                    textLabel = buttonTextContent.first().first,
+                    textLabel = stringResource(id = R.string.login),
                     textLabelStyle = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary),
                 )
 
@@ -108,7 +111,7 @@ fun AuthScreen(
                     onClick = { buttonTextContent[1].second() },
                     textLabel = buttonTextContent[1].first,
                     textLabelStyle = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary)
-                )
+                )*/
             }
         }
     }

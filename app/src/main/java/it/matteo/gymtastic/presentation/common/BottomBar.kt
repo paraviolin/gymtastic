@@ -28,16 +28,28 @@ fun BottomNavigationBar(navHostController: NavHostController, isCustomer: Boolea
                 selectedContentColor = MaterialTheme.colors.secondary,
                 unselectedContentColor = MaterialTheme.colors.secondary.copy(0.4f),
                 alwaysShowLabel = true,
-                selected = currentRoute == item.name,
+                selected = currentRoute?.contains(item.name) == true,
                 onClick = {
-                    navHostController.navigate(item.name) {
-                        navHostController.graph.startDestinationRoute?.let {
-                            popUpTo(it) {
-                                saveState = true
+                    if (item == Screens.Exercises) {
+                        navHostController.navigate("${item.name}/$isCustomer") {
+                            navHostController.graph.startDestinationRoute?.let {
+                                popUpTo(it) {
+                                    saveState = true
+                                }
                             }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                    } else {
+                        navHostController.navigate(item.name) {
+                            navHostController.graph.startDestinationRoute?.let {
+                                popUpTo(it) {
+                                    saveState = true
+                                }
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 }
             )

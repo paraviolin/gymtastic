@@ -25,6 +25,7 @@ fun LoginScreen(navHostController: NavHostController) {
     val authViewModel: AuthViewModel = viewModel()
     val state by authViewModel.loadingState.collectAsState()
     AuthScreen(
+        navHostController = navHostController,
         title = stringResource(id = R.string.welcome),
         onSubmit = { username, password ->
             authViewModel.login(username, password)
@@ -32,7 +33,7 @@ fun LoginScreen(navHostController: NavHostController) {
         outlinedButtonText = stringResource(
             id = R.string.login
         ), buttonTextContent = listOf(
-            Pair(
+           /* Pair(
                 stringResource(id = R.string.register)
             ) {
                 navHostController.navigate(Screens.Signup.name)
@@ -43,7 +44,7 @@ fun LoginScreen(navHostController: NavHostController) {
                 )
             ) {
                 navHostController.navigate(Screens.ForgotPassword.name)
-            },
+            },*/
         )
     )
     when {

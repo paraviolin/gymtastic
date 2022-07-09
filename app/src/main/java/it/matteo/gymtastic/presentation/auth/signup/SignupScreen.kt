@@ -26,6 +26,7 @@ fun SignupScreen(navHostController: NavHostController) {
     val authViewModel: AuthViewModel = viewModel()
     val state by authViewModel.loadingState.collectAsState()
     AuthScreen(
+        navHostController = navHostController,
         title = stringResource(id = R.string.register),
         onSubmit = authViewModel::signUp,
         outlinedButtonText = stringResource(

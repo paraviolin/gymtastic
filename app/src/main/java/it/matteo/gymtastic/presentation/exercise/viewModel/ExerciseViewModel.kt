@@ -11,6 +11,7 @@ import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -30,9 +31,9 @@ class ExerciseViewModel @Inject constructor(private val exerciseService: Exercis
         _loadingState.tryEmit(LoadingState.LOADED)
     }
 
-    fun save(id: String, name: String, description: String, duration: String, type: String) {
+    fun save(name: String, description: String, duration: String, type: String) {
         exerciseService.createExercise(ExerciseModel(
-            id = id,
+            id = UUID.randomUUID().toString(),
             name = name,
             description = description,
             duration = duration,

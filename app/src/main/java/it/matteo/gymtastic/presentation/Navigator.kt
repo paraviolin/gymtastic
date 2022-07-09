@@ -101,8 +101,8 @@ fun GymNavigator(
                 it.arguments?.getString("customerId").toString()
             )
         }
-        composable(Screens.Exercises.name) {
-            ExercisesScreen(navHostController = navHost)
+        composable("${Screens.Exercises.name}/{isCustomer}", arguments = listOf(navArgument("isCustomer") {type = NavType.BoolType})) {
+            ExercisesScreen(navHostController = navHost, it.arguments?.getBoolean("isCustomer"))
         }
         composable(Screens.CreateExercise.name) {
             CreateExerciseScreen(navHostController = navHost)

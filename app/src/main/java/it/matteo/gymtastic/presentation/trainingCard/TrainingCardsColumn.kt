@@ -24,7 +24,7 @@ import it.matteo.gymtastic.presentation.Screens
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrainingCardsColumn(list: List<TrainingCardModel>, navHostController: NavHostController) {
-    Column( modifier = Modifier.fillMaxSize(),
+    Column( modifier = Modifier.fillMaxSize().padding(bottom = 56.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ){

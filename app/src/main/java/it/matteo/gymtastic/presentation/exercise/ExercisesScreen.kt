@@ -22,13 +22,15 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
+import it.matteo.gymtastic.domain.user.model.GymRole
 import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
+import it.matteo.gymtastic.presentation.common.BottomNavigationBar
 import it.matteo.gymtastic.presentation.common.LoaderComponent
 import it.matteo.gymtastic.presentation.exercise.viewModel.ExerciseViewModel
 
 @Composable
-fun ExercisesScreen(navHostController: NavHostController) {
+fun ExercisesScreen(navHostController: NavHostController, isCustomer: Boolean? = true) {
     val exerciseViewModel = hiltViewModel<ExerciseViewModel>()
     val exercises = remember {
         exerciseViewModel.exercises
@@ -55,9 +57,10 @@ fun ExercisesScreen(navHostController: NavHostController) {
                 }
             }
         )
-    }, floatingActionButton = {
+    }, bottomBar =  { BottomNavigationBar(navHostController = navHostController, isCustomer == true) }
+        ,floatingActionButton = {
         FloatingActionButton(
-            modifier = Modifier.padding(bottom = 16.dp),
+            modifier = Modifier.padding(bottom = 48.dp),
             backgroundColor = Color.Transparent,
             onClick = { navHostController.navigate(Screens.CreateExercise.name) }) {
             Icon(

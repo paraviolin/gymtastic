@@ -37,9 +37,6 @@ fun CreateExerciseScreen(navHostController: NavHostController) {
     val duration = remember {
         mutableStateOf("")
     }
-    val id = remember {
-        mutableStateOf("")
-    }
 
     val exerciseType = remember { mutableStateOf("") } // initial value
 
@@ -66,10 +63,6 @@ fun CreateExerciseScreen(navHostController: NavHostController) {
                 modifier = Modifier.padding(vertical = 16.dp),
                 style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraLight),
             )
-            TextFieldComponent(
-                content = id.value,
-                labelName = "Id",
-                onValueChange = { id.value = it })
             TextFieldComponent(
                 content = name.value,
                 labelName = "Name",
@@ -118,7 +111,6 @@ fun CreateExerciseScreen(navHostController: NavHostController) {
             OutlinedStyledButton(
                 onClick = {
                     exerciseViewModel.save(
-                        id = id.value,
                         name = name.value,
                         description = description.value,
                         duration = duration.value,
@@ -127,7 +119,7 @@ fun CreateExerciseScreen(navHostController: NavHostController) {
                     navHostController.navigateUp()
                 },
                 textLabel = "SAVE",
-                enabled = id.value.isNotBlank() && duration.value.isNotBlank() && description.value.isNotBlank() && name.value.isNotBlank() && exerciseType.value.isNotBlank()
+                enabled = duration.value.isNotBlank() && description.value.isNotBlank() && name.value.isNotBlank() && exerciseType.value.isNotBlank()
             )
 
         }

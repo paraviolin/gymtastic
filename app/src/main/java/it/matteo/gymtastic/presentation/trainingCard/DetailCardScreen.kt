@@ -12,6 +12,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -47,8 +48,20 @@ fun DetailCard(navHostController: NavHostController, cardId: String?) {
                 }
             )
         }) {
-            mainScreenViewModel.currentTrainingCard?.let {
-                WorkoutList(card = it, navHostController = navHostController) }
+            Column(
+                modifier = Modifier.fillMaxSize(),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = "EXERCISES",
+                    modifier = Modifier.padding(vertical = 16.dp),
+                    style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraLight),
+                )
+                mainScreenViewModel.currentTrainingCard?.let {
+                    WorkoutList(card = it, navHostController = navHostController)
+                }
             }
+        }
     }
 }

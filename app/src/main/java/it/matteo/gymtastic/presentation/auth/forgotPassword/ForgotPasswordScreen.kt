@@ -13,6 +13,7 @@ import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 fun ForgotPasswordScreen(navHostController: NavHostController) {
     val authViewModel: AuthViewModel = viewModel()
     AuthScreen(
+        navHostController = navHostController,
         title = stringResource(id = R.string.forgotPassword),
         onSubmit = authViewModel::signUp,
         outlinedButtonText = stringResource(
