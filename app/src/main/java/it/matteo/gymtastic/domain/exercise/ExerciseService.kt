@@ -18,4 +18,8 @@ class ExerciseService @Inject constructor(private val exerciseRepository: Exerci
             ExerciseConverter.toModel(it)
         }
     }
+
+    fun createExercise(exerciseModel: ExerciseModel) {
+        exerciseRepository.addExercise(ExerciseConverter.toEntity(exerciseModel))
+    }
 }

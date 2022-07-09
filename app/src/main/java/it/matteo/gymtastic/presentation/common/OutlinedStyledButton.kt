@@ -4,6 +4,7 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -17,12 +18,14 @@ fun OutlinedStyledButton(
     onClick: () -> Unit,
     textLabel: String,
     textLabelStyle: TextStyle = MaterialTheme.typography.h4,
+    enabled: Boolean = true
 ) {
     Button(
         onClick = onClick,
         border = BorderStroke(1.dp, MaterialTheme.colors.secondary),
         shape = MaterialTheme.shapes.medium,
-        modifier = modifier.padding(top = 16.dp)
+        modifier = modifier.padding(top = 16.dp),
+        enabled = enabled,
     ) {
         Text(text = textLabel, style = textLabelStyle)
     }

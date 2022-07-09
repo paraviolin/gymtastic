@@ -17,22 +17,16 @@ class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFir
     TrainingCardRepository {
     private val _trainingCardDocumentName = "training_card"
 
-    override suspend fun addTrainingCard(trainingCardEntity: TrainingCardEntity) =
-        flow<Response<Void?>> {
-            emit(Loading)
-            val trainingCardDto = TrainingCardSerializer.toMap(trainingCardEntity)
+    override fun addTrainingCard(trainingCardEntity: TrainingCardEntity) {
+        val trainingCardDto = TrainingCardSerializer.toMap(trainingCardEntity)
 
-            val result = db.collection(_trainingCardDocumentName)
-                .document(trainingCardEntity.id)
-                .set(trainingCardDto)
-                .addOnFailureListener {
-                    throw FirebaseConnectionException()
-                }
-                .result
-
-            emit(Success(result))
-
-        }
+        db.collection(_trainingCardDocumentName)
+            .document(trainingCardEntity.id)
+            .set(trainingCardDto)
+            .addOnFailureListener {
+                throw FirebaseConnectionException()
+            }
+    }
 
     override suspend fun getTrainingCard(id: String) = callbackFlow<TrainingCardEntity?> {
 

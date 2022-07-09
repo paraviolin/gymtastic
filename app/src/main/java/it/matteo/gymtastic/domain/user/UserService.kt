@@ -1,14 +1,8 @@
 package it.matteo.gymtastic.domain.user
 
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.auth.User
-import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.user.UserRepository
-import it.matteo.gymtastic.data.user.entity.UserEntity
 import it.matteo.gymtastic.domain.user.model.UserModel
 import it.matteo.gymtastic.domain.utils.UserConverter
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 

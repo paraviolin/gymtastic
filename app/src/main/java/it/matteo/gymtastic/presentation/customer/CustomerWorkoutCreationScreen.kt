@@ -1,6 +1,7 @@
 package it.matteo.gymtastic.presentation.customer
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -18,9 +20,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
+import it.matteo.gymtastic.domain.exercise.model.ExerciseType
 import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
 import it.matteo.gymtastic.presentation.customer.viewModel.CustomerViewModel
+import it.matteo.gymtastic.presentation.profile.components.BasicTextField
+import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun CustomerWorkoutCreationScreen(navHostController: NavHostController, customerId: String) {
     val customerViewModel: CustomerViewModel = hiltViewModel()
@@ -32,11 +38,15 @@ fun CustomerWorkoutCreationScreen(navHostController: NavHostController, customer
     }
 
     val addedExercises = remember {
-        mutableListOf<ExerciseModel>()
+        mutableStateOf(listOf<ExerciseModel>())
     }
 
     val availableExercises = remember {
         customerViewModel.availableExercises
+    }
+
+    val hasEnteredExercises = remember {
+        mutableStateOf(false)
     }
 
     Scaffold(topBar = {
@@ -67,53 +77,107 @@ fun CustomerWorkoutCreationScreen(navHostController: NavHostController, customer
                 style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
             )
 
-            LazyColumn(modifier = Modifier.fillMaxWidth()) {
-                items(availableExercises.value, itemContent = { exercise ->
-                    Row(horizontalArrangement = Arrangement.Center, verticalAlignment = Alignment.CenterVertically) {
-                        val checked = remember {
-                            mutableStateOf(addedExercises.contains(exercise))
+
+            LazyColumn(modifier = Modifier.padding(top = 16.dp)) {
+                items(addedExercises.value, itemContent = { ex ->
+                    Box {
+                        val isOpen = remember { mutableStateOf(false) } // initial value
+
+                        val text = remember { mutableStateOf(ex.name) } // initial value
+
+                        val openCloseOfDropDownList: (Boolean) -> Unit = {
+                            isOpen.value = it
+                            hasEnteredExercises.value = true
                         }
-                        Checkbox(checked = checked.value, onCheckedChange = {
-                            addedExercises.add(exercise)
-                            checked.value = !checked.value
-                        }, colors = CheckboxDefaults.colors(
-                            checkedColor = MaterialTheme.colors.secondary,
-                            uncheckedColor = MaterialTheme.colors.secondaryVariant
-                        ))
-                        Text(text = exercise.name)
+                        val userSelectedString: (ExerciseModel) -> Unit = { exerciseModel ->
+                            val current = addedExercises.value.find { it.id == ex.id }
+                            val currentList = addedExercises.value.toMutableList()
+                            currentList.remove(current)
+                            currentList.add(exerciseModel)
+                            addedExercises.value = currentList
+                            text.value = exerciseModel.name
+                        }
+
+                        BasicTextField(
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            content = text.value,
+                            labelName = "Exercise",
+                            onValueChange = { text.value = it })
+                        DropDownList(
+                            requestToOpen = isOpen.value,
+                            list = availableExercises.value,
+                            openCloseOfDropDownList,
+                            userSelectedString
+                        )
+                        Spacer(
+                            modifier = Modifier
+                                .matchParentSize()
+                                .background(Color.Transparent)
+                                .padding(10.dp)
+                                .clickable(
+                                    onClick = { isOpen.value = true }
+                                )
+                        )
                     }
                 })
             }
-            OutlinedStyledButton(onClick = { /*TODO*/ }, textLabel = "SAVE")
+
+            OutlinedStyledButton(onClick = {
+                val currList = addedExercises.value.toMutableList()
+                currList.add(
+                    ExerciseModel(
+                        id = "",
+                        name = "",
+                        description = "",
+                        duration = "",
+                        type = ExerciseType.Aerobic
+                    )
+                )
+                addedExercises.value = currList
+            }, textLabel = "+")
+            OutlinedStyledButton(
+                onClick = {
+                    customerViewModel.saveTrainingCard(addedExercises.value)
+                    navHostController.navigateUp()
+                },
+                textLabel = "SAVE",
+                enabled = customer.value != null && hasEnteredExercises.value
+            )
         }
 
     }
 }
 
+
 @Composable
-fun DropdownListMenu(list: List<ExerciseModel>, onSelected: (exercise: ExerciseModel) -> Unit) {
-    val expanded = remember {
-        mutableStateOf(false)
-    }
-
-    val selectedIndex = remember {
-        mutableStateOf(0)
-    }
-
+fun DropDownList(
+    requestToOpen: Boolean = false,
+    list: List<ExerciseModel>,
+    request: (Boolean) -> Unit,
+    selectedExercise: (ExerciseModel) -> Unit
+) {
     DropdownMenu(
-        expanded = expanded.value,
-        onDismissRequest = { expanded.value = false },
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Color.Red)
+            .background(
+                color = MaterialTheme.colors.primaryVariant
+            ),
+        expanded = requestToOpen,
+        onDismissRequest = { request(false) },
     ) {
-        list.forEachIndexed { index, exerciseModel ->
-            DropdownMenuItem(onClick = {
-                expanded.value = false
-                selectedIndex.value = index
-                onSelected(exerciseModel)
-            }) {
-                Text(text = "${exerciseModel.name} - ${exerciseModel.duration}")
+        list.forEach { exerciseModel ->
+            DropdownMenuItem(
+                modifier = Modifier.fillMaxWidth(),
+                onClick = {
+                    request(false)
+                    selectedExercise(exerciseModel)
+                }
+            ) {
+                Text(
+                    text = "${exerciseModel.name} - ${exerciseModel.duration}",
+                    modifier = Modifier.wrapContentWidth(),
+                    style = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary)
+                )
             }
         }
     }

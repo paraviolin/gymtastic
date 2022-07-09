@@ -10,7 +10,7 @@ object TrainingCardSerializer {
             "id" to trainingCardEntity.id,
             "userId" to trainingCardEntity.userId,
             "exercises" to trainingCardEntity.exercises,
-            "createdAt" to trainingCardEntity.createdAt.toString()
+            "createdAt" to trainingCardEntity.createdAt
         )
     }
 

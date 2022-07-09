@@ -46,24 +46,19 @@ class ExerciseRepositoryImpl @Inject constructor(private val db: FirebaseFiresto
             awaitClose()
         }
 
-    override suspend fun addExercise(exerciseEntity: ExerciseEntity) = flow<Response<Void?>> {
-        emit(Response.Loading)
-
+    override fun addExercise(exerciseEntity: ExerciseEntity) {
         val exerciseDto = ExerciseSerializer.toMap(exerciseEntity)
 
-        val result = db.collection(_exerciseDocumentName)
+        db.collection(_exerciseDocumentName)
             .document(exerciseEntity.id)
             .set(exerciseDto)
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
-            .result
-
-        emit(Response.Success(result))
     }
 
 
-    override suspend fun updateExercise(exerciseEntity: ExerciseEntity) =
+    override fun updateExercise(exerciseEntity: ExerciseEntity) =
         addExercise(exerciseEntity)
 
     override suspend fun deleteExercise(exerciseEntity: ExerciseEntity) = flow<Response<Void?>> {

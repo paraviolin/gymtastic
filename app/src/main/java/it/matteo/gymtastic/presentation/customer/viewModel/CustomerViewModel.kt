@@ -66,4 +66,12 @@ class CustomerViewModel @Inject constructor(
         }
         _loadingState.tryEmit(LoadingState.LOADED)
     }
+
+    fun saveTrainingCard(exercises: List<ExerciseModel>) {
+        _loadingState.tryEmit(LoadingState.LOADING)
+        viewModelScope.launch {
+            trainingCardService.createTrainingCard(exercises, customer.value!!.id)
+        }
+        _loadingState.tryEmit(LoadingState.LOADED)
+    }
 }

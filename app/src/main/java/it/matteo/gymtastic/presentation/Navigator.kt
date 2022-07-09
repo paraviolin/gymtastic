@@ -16,6 +16,8 @@ import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.customer.CustomerDetailScreen
 import it.matteo.gymtastic.presentation.customer.CustomerWorkoutCreationScreen
 import it.matteo.gymtastic.presentation.customer.CustomerWorkoutsScreen
+import it.matteo.gymtastic.presentation.exercise.CreateExerciseScreen
+import it.matteo.gymtastic.presentation.exercise.ExercisesScreen
 import it.matteo.gymtastic.presentation.main.MainScreen
 import it.matteo.gymtastic.presentation.profile.ProfileScreen
 import it.matteo.gymtastic.presentation.trainingCard.DetailCard
@@ -98,6 +100,12 @@ fun GymNavigator(
                 navHostController = navHost,
                 it.arguments?.getString("customerId").toString()
             )
+        }
+        composable(Screens.Exercises.name) {
+            ExercisesScreen(navHostController = navHost)
+        }
+        composable(Screens.CreateExercise.name) {
+            CreateExerciseScreen(navHostController = navHost)
         }
     }
 }

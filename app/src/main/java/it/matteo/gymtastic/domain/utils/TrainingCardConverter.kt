@@ -1,5 +1,6 @@
 package it.matteo.gymtastic.domain.utils
 
+import com.google.firebase.Timestamp
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
 import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
 import it.matteo.gymtastic.domain.trainingCard.model.TrainingCardModel
@@ -24,5 +25,14 @@ object TrainingCardConverter {
         return Instant.ofEpochMilli(dateToConvert.time)
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime()
+    }
+
+    fun toEntity(model: TrainingCardModel): TrainingCardEntity {
+        return TrainingCardEntity(
+            id = model.id,
+            exercises = model.exercises.map { it.id },
+            userId = model.userId,
+            createdAt = Timestamp.now()
+        )
     }
 }

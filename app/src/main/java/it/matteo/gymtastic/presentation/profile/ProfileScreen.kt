@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.R
+import it.matteo.gymtastic.domain.user.model.GymRole
 import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.common.BottomNavigationBar
@@ -40,7 +41,7 @@ fun ProfileScreen(navHostController: NavHostController) {
         profileViewModel.updateUserProfile(it.email!!)
     }
 
-    Scaffold(bottomBar = { BottomNavigationBar(navHostController = navHostController) }) {
+    Scaffold(bottomBar = { BottomNavigationBar(navHostController = navHostController, profileViewModel.userProfile.value?.role == GymRole.customer) }) {
         if (user.value == null) {
             LoaderComponent()
             return@Scaffold

@@ -12,4 +12,12 @@ object ExerciseConverter {
         type = ExerciseType.valueOf(entity.type),
         duration = entity.duration
     )
+
+    fun toEntity(model: ExerciseModel): ExerciseEntity = ExerciseEntity(
+        id = model.id,
+        name = model.name,
+        description = model.description,
+        duration = model.duration,
+        type = model.type.name
+    )
 }
