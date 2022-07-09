@@ -1,6 +1,8 @@
 package it.matteo.gymtastic.presentation.profile
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
@@ -48,7 +50,9 @@ fun ProfileScreen(navHostController: NavHostController) {
         }
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
         ) {
             Text(
                 text = stringResource(R.string.your_profile),
