@@ -16,8 +16,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import it.matteo.gymtastic.data.workout.entity.WorkoutEntity
-import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
 import it.matteo.gymtastic.domain.trainingCard.model.TrainingCardModel
 import it.matteo.gymtastic.presentation.Screens
 
