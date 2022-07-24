@@ -1,13 +1,11 @@
 package it.matteo.gymtastic.data.trainingCard
 
-import androidx.compose.runtime.snapshots.SnapshotApplyResult
 import com.google.firebase.firestore.FirebaseFirestore
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
-import it.matteo.gymtastic.data.utils.serializers.TrainingCardSerializer
+import it.matteo.gymtastic.data.serializers.TrainingCardSerializer
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) :

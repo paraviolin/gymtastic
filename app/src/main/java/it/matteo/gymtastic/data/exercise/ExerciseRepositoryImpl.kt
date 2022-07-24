@@ -3,10 +3,9 @@ package it.matteo.gymtastic.data.exercise
 import com.google.firebase.firestore.FirebaseFirestore
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
-import it.matteo.gymtastic.data.utils.serializers.ExerciseSerializer
+import it.matteo.gymtastic.data.serializers.ExerciseSerializer
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class ExerciseRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) :
