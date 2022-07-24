@@ -18,17 +18,18 @@ import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 import it.matteo.gymtastic.presentation.common.LoaderComponent
 import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
 import it.matteo.gymtastic.presentation.common.WorkoutList
-import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
+import it.matteo.gymtastic.presentation.trainingCard.viewModel.DetailCardViewModel
 
 @Composable
 fun DetailCard(navHostController: NavHostController, cardId: String?) {
 
-    val mainScreenViewModel: MainScreenViewModel = hiltViewModel()
-    val state by mainScreenViewModel.loadingState.collectAsState()
+    val detailViewModel: DetailCardViewModel = hiltViewModel()
+    val state by detailViewModel.loadingState.collectAsState()
+    detailViewModel.updateUser()
 
-    if (!mainScreenViewModel.hasTrainingCard && state.status != LoadingState.Status.SUCCESS) {
+    if (!detailViewModel.hasTrainingCard && state.status != LoadingState.Status.SUCCESS) {
         if (cardId != null) {
-            mainScreenViewModel.getTrainingCard(cardId)
+            detailViewModel.getTrainingCard(cardId)
         }
     }
 
@@ -61,13 +62,15 @@ fun DetailCard(navHostController: NavHostController, cardId: String?) {
                         modifier = Modifier.padding(top = 16.dp),
                         style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraLight),
                     )
-                    OutlinedStyledButton(
-                        modifier = Modifier.padding(start = 32.dp),
-                        onClick = { navHostController.navigate("${Screens.Session.name}/${mainScreenViewModel.currentTrainingCard?.userId}/${mainScreenViewModel.currentTrainingCard?.id}") },
-                        textLabel = "Start"
-                    )
+                    if(!detailViewModel.isTrainer()) {
+                        OutlinedStyledButton(
+                            modifier = Modifier.padding(start = 32.dp),
+                            onClick = { navHostController.navigate("${Screens.Session.name}/${detailViewModel.currentTrainingCard?.userId}/${detailViewModel.currentTrainingCard?.id}") },
+                            textLabel = "Start"
+                        )
+                    }
                 }
-                mainScreenViewModel.currentTrainingCard?.let {
+                detailViewModel.currentTrainingCard?.let {
                     WorkoutList(card = it, navHostController = navHostController)
                 }
             }

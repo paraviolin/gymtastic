@@ -17,7 +17,6 @@ import it.matteo.gymtastic.presentation.auth.AuthScreen
 import it.matteo.gymtastic.presentation.auth.viewModel.AuthViewModel
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 import it.matteo.gymtastic.presentation.common.LoaderComponent
-import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable

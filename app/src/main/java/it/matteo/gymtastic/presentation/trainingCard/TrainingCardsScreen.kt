@@ -9,24 +9,30 @@ import androidx.navigation.NavHostController
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 import it.matteo.gymtastic.presentation.common.BottomNavigationBar
 import it.matteo.gymtastic.presentation.common.LoaderComponent
-import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
+import it.matteo.gymtastic.presentation.trainingCard.viewModel.TrainingCardViewModel
 
 @Composable
 fun TrainingCardsScreen(
     navHostController: NavHostController,
-    mainScreenViewModel: MainScreenViewModel = hiltViewModel()
+    trainingCardViewModel: TrainingCardViewModel = hiltViewModel()
 ) {
-    val state by mainScreenViewModel.loadingState.collectAsState()
+    val state by trainingCardViewModel.loadingState.collectAsState()
 
-    if (!mainScreenViewModel.hasTrainingCards && state.status != LoadingState.Status.SUCCESS) {
-        mainScreenViewModel.fetchTrainingCards()
+    if (!trainingCardViewModel.hasTrainingCards && state.status != LoadingState.Status.SUCCESS) {
+        trainingCardViewModel.fetchTrainingCards()
     }
 
     when (state) {
         LoadingState.LOADING -> LoaderComponent()
-        LoadingState.LOADED -> Scaffold(bottomBar = { BottomNavigationBar(navHostController = navHostController, !mainScreenViewModel.isTrainer()) }) {
+        LoadingState.LOADED -> Scaffold(bottomBar = {
+            BottomNavigationBar(
+                navHostController = navHostController,
+                !trainingCardViewModel.isTrainer()
+            )
+        }) {
             TrainingCardsColumn(
-                list = mainScreenViewModel.trainingCards.value.sortedBy { it.createdAt }.reversed(),
+                list = trainingCardViewModel.trainingCards.value.sortedBy { it.createdAt }
+                    .reversed(),
                 navHostController = navHostController
             )
         }

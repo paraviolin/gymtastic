@@ -22,7 +22,6 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
-import it.matteo.gymtastic.domain.user.model.GymRole
 import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 import it.matteo.gymtastic.presentation.common.BottomNavigationBar

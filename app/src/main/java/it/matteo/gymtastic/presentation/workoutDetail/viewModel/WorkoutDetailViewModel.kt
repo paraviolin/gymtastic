@@ -42,21 +42,16 @@ class WorkoutDetailViewModel @Inject constructor(
         MutableStateFlow(LoadingState.LOADING)
     val loadingState = _loadingState.asStateFlow()
 
-    val hasData: Boolean = exercise != null && loadingState.value == LoadingState.LOADED
-
     private val auth = Firebase.auth
 
     fun getExerciseDetail(exerciseId: String) {
-        _loadingState.tryEmit(LoadingState.LOADING)
         viewModelScope.launch {
             val result = exerciseService.getExercise(exerciseId)
             _exercise.postValue(result)
-            _loadingState.tryEmit(LoadingState.LOADED)
         }
     }
 
     fun getNotes(exerciseId: String, userId: String) {
-        _loadingState.tryEmit(LoadingState.LOADING)
         viewModelScope.launch {
             notes.value = sessionService.getSessionExercises(exerciseId, userId)
             _loadingState.tryEmit(LoadingState.LOADED)

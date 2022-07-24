@@ -1,4 +1,4 @@
-package it.matteo.gymtastic.presentation.main.viewModel
+package it.matteo.gymtastic.presentation.trainingCard.viewModel
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
@@ -19,32 +19,30 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainScreenViewModel @Inject constructor(
+class DetailCardViewModel @Inject constructor(
     private val trainingCardService: TrainingCardService,
     private val userService: UserService
 ) : ViewModel() {
-    var lastTrainingCard = mutableStateOf<TrainingCardModel?>(null)
-        private set
-
     private var _loadingState: MutableStateFlow<LoadingState> =
         MutableStateFlow(LoadingState.LOADING)
     val loadingState = _loadingState.asStateFlow()
+
+    private val _currentTrainingCard = MutableLiveData<TrainingCardModel>()
+    val currentTrainingCard: TrainingCardModel?
+        get() = _currentTrainingCard.value
 
     private val auth = Firebase.auth
 
     var user = mutableStateOf<UserModel?>(null)
         private set
 
-    var customers = mutableStateOf(listOf<UserModel>())
-        private set
+    val hasTrainingCard: Boolean = currentTrainingCard != null
 
-
-    fun fetchLastTrainingCard() {
+    fun getTrainingCard(cardId: String) {
         viewModelScope.launch {
-            user.value = userService.getUserByEmail(auth.currentUser!!.email!!)
             _loadingState.tryEmit(LoadingState.LOADING)
-            val result = trainingCardService.getLastTrainingCard(user.value!!.id)
-            lastTrainingCard.value = result
+            val result = trainingCardService.getTrainingCard(cardId)
+            _currentTrainingCard.postValue(result)
             _loadingState.tryEmit(LoadingState.LOADED)
         }
     }
@@ -57,13 +55,5 @@ class MainScreenViewModel @Inject constructor(
 
     fun isTrainer(): Boolean {
         return user.value?.role == GymRole.trainer
-    }
-
-    fun fetchCustomers() {
-        viewModelScope.launch {
-            _loadingState.tryEmit(LoadingState.LOADING)
-            customers.value = userService.getCustomers()
-            _loadingState.tryEmit(LoadingState.LOADED)
-        }
     }
 }

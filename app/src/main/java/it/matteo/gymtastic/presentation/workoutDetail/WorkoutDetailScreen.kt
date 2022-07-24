@@ -101,24 +101,26 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
                         )
 
                     notes?.let { exerciseNotes ->
-                        Text(
-                            text = "Notes",
-                            modifier = Modifier.padding(top = 16.dp),
-                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
-                        )
-                        val filteredNotes = exerciseNotes.filterNot { it.id.isEmpty() }
-                        LazyColumn {
-                            items(filteredNotes, itemContent = {
-                                TextFieldComponent(
-                                    content = it.note,
-                                    labelName = it.createdAt?.toLocalDate().toString(),
-                                    labelFontSize = 16.sp,
-                                    onValueChange = {},
-                                    modifier = Modifier.padding(horizontal = 32.dp),
-                                    enabled = false,
-                                    shape = RoundedCornerShape(20),
-                                )
-                            })
+                        if (exerciseNotes.isNotEmpty()) {
+                            Text(
+                                text = "Notes",
+                                modifier = Modifier.padding(top = 16.dp),
+                                style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
+                            )
+                            val filteredNotes = exerciseNotes.filterNot { it.id.isEmpty() }
+                            LazyColumn {
+                                items(filteredNotes, itemContent = {
+                                    TextFieldComponent(
+                                        content = it.note,
+                                        labelName = it.createdAt?.toLocalDate().toString(),
+                                        labelFontSize = 16.sp,
+                                        onValueChange = {},
+                                        modifier = Modifier.padding(horizontal = 32.dp),
+                                        enabled = false,
+                                        shape = RoundedCornerShape(20),
+                                    )
+                                })
+                            }
                         }
                     }
 
