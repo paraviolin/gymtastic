@@ -1,4 +1,4 @@
-package it.matteo.gymtastic.data.utils.serializers
+package it.matteo.gymtastic.data.serializers
 
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 

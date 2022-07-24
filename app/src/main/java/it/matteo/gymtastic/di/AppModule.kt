@@ -11,6 +11,10 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import it.matteo.gymtastic.data.exercise.ExerciseRepository
 import it.matteo.gymtastic.data.exercise.ExerciseRepositoryImpl
+import it.matteo.gymtastic.data.session.SessionExerciseRepository
+import it.matteo.gymtastic.data.session.SessionExerciseRepositoryImpl
+import it.matteo.gymtastic.data.session.SessionRepository
+import it.matteo.gymtastic.data.session.SessionRepositoryImpl
 import it.matteo.gymtastic.data.trainingCard.TrainingCardRepository
 import it.matteo.gymtastic.data.trainingCard.TrainingCardRepositoryImpl
 import it.matteo.gymtastic.data.user.UserRepository
@@ -42,8 +46,18 @@ object AppModule {
     ): TrainingCardService = TrainingCardService(trainingCardRepository, exerciseRepository)
 
     @Provides
-    fun provideUserRepository(firestore: FirebaseFirestore): UserRepository = UserRepositoryImpl(firestore)
+    fun provideUserRepository(firestore: FirebaseFirestore): UserRepository =
+        UserRepositoryImpl(firestore)
 
     @Provides
-    fun provideUserService(userRepository: UserRepository): UserService = UserService(userRepository)
+    fun provideUserService(userRepository: UserRepository): UserService =
+        UserService(userRepository)
+
+    @Provides
+    fun provideSessionRepository(firestore: FirebaseFirestore): SessionRepository =
+        SessionRepositoryImpl(firestore)
+
+    @Provides
+    fun provideSessionExerciseRepository(firestore: FirebaseFirestore): SessionExerciseRepository =
+        SessionExerciseRepositoryImpl(firestore)
 }

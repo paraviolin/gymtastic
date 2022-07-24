@@ -1,13 +1,11 @@
 package it.matteo.gymtastic.data.user
 
-import androidx.compose.runtime.snapshots.SnapshotApplyResult
 import com.google.firebase.firestore.FirebaseFirestore
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.user.entity.UserEntity
-import it.matteo.gymtastic.data.utils.serializers.UserSerializer
+import it.matteo.gymtastic.data.serializers.UserSerializer
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) : UserRepository {

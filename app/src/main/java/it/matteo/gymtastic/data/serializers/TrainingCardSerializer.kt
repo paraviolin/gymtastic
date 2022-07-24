@@ -1,4 +1,4 @@
-package it.matteo.gymtastic.data.utils.serializers
+package it.matteo.gymtastic.data.serializers
 
 import com.google.firebase.Timestamp
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
