@@ -1,12 +1,13 @@
 package it.matteo.gymtastic.presentation.workoutDetail
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -30,6 +31,15 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
     workoutDetailViewModel.getExerciseDetail(exerciseId ?: "")
     val exercise = workoutDetailViewModel.exercise
     val state by workoutDetailViewModel.loadingState.collectAsState()
+    val notes = workoutDetailViewModel.notes.value
+
+    workoutDetailViewModel.getUser()
+
+    if (exerciseId != null && workoutDetailViewModel.user.value?.id != null)
+        workoutDetailViewModel.getNotes(
+            exerciseId = exerciseId,
+            userId = workoutDetailViewModel.user.value?.id!!
+        )
 
     Scaffold(topBar = {
         TopAppBar(
@@ -60,7 +70,10 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
                     )
 
 
-                    Row(horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.Bottom) {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.Bottom
+                    ) {
                         Icon(Icons.Default.DateRange, contentDescription = "Play")
                         Text(
                             text = exercise?.duration ?: "",
@@ -87,8 +100,23 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
                         enabled = false,
                         shape = RoundedCornerShape(20),
 
-                    )
+                        )
 
+                    notes?.let { exerciseNotes ->
+                        LazyColumn {
+                            items(exerciseNotes, itemContent = {
+                                TextFieldComponent(
+                                    content = it.note,
+                                    labelName = "Note",
+                                    labelFontSize = 16.sp,
+                                    onValueChange = {},
+                                    modifier = Modifier.padding(horizontal = 32.dp),
+                                    enabled = false,
+                                    shape = RoundedCornerShape(20),
+                                )
+                            })
+                        }
+                    }
 
 
                 }

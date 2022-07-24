@@ -10,5 +10,7 @@ interface SessionExerciseRepository {
 
     suspend fun getAllSessionExercises(sessionId: String): Flow<List<SessionExerciseEntity>>
 
+    suspend fun getAllSessionExercises(exerciseId: String, sessionId: String): Flow<List<SessionExerciseEntity>>
+
     suspend fun deleteSessionExercise(id: String): Flow<Void?>
 }

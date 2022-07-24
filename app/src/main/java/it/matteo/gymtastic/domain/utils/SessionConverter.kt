@@ -30,4 +30,11 @@ object SessionConverter {
         exerciseId = model.exerciseId,
         note = model.note
     )
+
+    fun toExerciseModel(entity: SessionExerciseEntity) = SessionExerciseModel(
+        id = entity.id,
+        exerciseId = entity.exerciseId,
+        completed = entity.completed,
+        note = entity.note
+    )
 }

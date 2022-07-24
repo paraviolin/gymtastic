@@ -58,6 +58,29 @@ class SessionExerciseRepositoryImpl @Inject constructor(private val db: Firebase
             awaitClose()
         }
 
+    override suspend fun getAllSessionExercises(
+        exerciseId: String,
+        sessionId: String
+    ) = callbackFlow {
+        val exercises = mutableListOf<SessionExerciseEntity>()
+
+        db.collection(_sessionExerciseRepositoryName)
+            .whereEqualTo("exerciseId", exerciseId)
+            .whereEqualTo("sessionId", sessionId)
+            .get()
+            .addOnSuccessListener {
+                it.forEach { exercise ->
+                    exercises.add(SessionExerciseSerializer.fromMap(exercise.data))
+                }
+                trySend(exercises)
+            }
+            .addOnFailureListener {
+                throw FirebaseConnectionException()
+            }
+
+        awaitClose()
+    }
+
     override suspend fun deleteSessionExercise(id: String): Flow<Void?> = callbackFlow {
         db.collection(_sessionExerciseRepositoryName)
             .document(id)
