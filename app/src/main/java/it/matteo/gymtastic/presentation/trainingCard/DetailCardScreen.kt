@@ -1,9 +1,6 @@
 package it.matteo.gymtastic.presentation.trainingCard
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -16,8 +13,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import it.matteo.gymtastic.presentation.Screens
 import it.matteo.gymtastic.presentation.auth.viewModel.LoadingState
 import it.matteo.gymtastic.presentation.common.LoaderComponent
+import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
 import it.matteo.gymtastic.presentation.common.WorkoutList
 import it.matteo.gymtastic.presentation.main.viewModel.MainScreenViewModel
 
@@ -53,11 +52,21 @@ fun DetailCard(navHostController: NavHostController, cardId: String?) {
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "EXERCISES",
-                    modifier = Modifier.padding(vertical = 16.dp),
-                    style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraLight),
-                )
+                Row(
+                    modifier = Modifier.padding(bottom = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "EXERCISES",
+                        modifier = Modifier.padding(top = 16.dp),
+                        style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraLight),
+                    )
+                    OutlinedStyledButton(
+                        modifier = Modifier.padding(start = 32.dp),
+                        onClick = { navHostController.navigate("${Screens.Session.name}/${mainScreenViewModel.currentTrainingCard?.userId}/${mainScreenViewModel.currentTrainingCard?.id}") },
+                        textLabel = "Start"
+                    )
+                }
                 mainScreenViewModel.currentTrainingCard?.let {
                     WorkoutList(card = it, navHostController = navHostController)
                 }
