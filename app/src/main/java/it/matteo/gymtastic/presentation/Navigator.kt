@@ -20,6 +20,7 @@ import it.matteo.gymtastic.presentation.exercise.CreateExerciseScreen
 import it.matteo.gymtastic.presentation.exercise.ExercisesScreen
 import it.matteo.gymtastic.presentation.main.MainScreen
 import it.matteo.gymtastic.presentation.profile.ProfileScreen
+import it.matteo.gymtastic.presentation.session.SessionScreen
 import it.matteo.gymtastic.presentation.trainingCard.DetailCard
 import it.matteo.gymtastic.presentation.trainingCard.TrainingCardsScreen
 import it.matteo.gymtastic.presentation.workoutDetail.WorkoutDetailScreen
@@ -75,6 +76,18 @@ fun GymNavigator(
         ) {
             DetailCard(navHostController = navHost, cardId = it.arguments?.getString("id"))
         }
+        composable(
+            "${Screens.Session.name}/{userId}/{trainingId}",
+            arguments = listOf(
+                navArgument("userId") { type = NavType.StringType },
+                navArgument("trainingId") { type = NavType.StringType })
+        ) {
+            SessionScreen(
+                navHostController = navHost,
+                userId = it.arguments?.getString("userId").toString(),
+                trainingId = it.arguments?.getString("trainingId").toString()
+            )
+        }
 
         // TRAINER
         composable(
@@ -101,7 +114,10 @@ fun GymNavigator(
                 it.arguments?.getString("customerId").toString()
             )
         }
-        composable("${Screens.Exercises.name}/{isCustomer}", arguments = listOf(navArgument("isCustomer") {type = NavType.BoolType})) {
+        composable(
+            "${Screens.Exercises.name}/{isCustomer}",
+            arguments = listOf(navArgument("isCustomer") { type = NavType.BoolType })
+        ) {
             ExercisesScreen(navHostController = navHost, it.arguments?.getBoolean("isCustomer"))
         }
         composable(Screens.CreateExercise.name) {

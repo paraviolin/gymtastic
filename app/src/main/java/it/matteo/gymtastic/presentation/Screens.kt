@@ -33,6 +33,7 @@ enum class Screens(
         image = Icons.Filled.Build
     ),
     TrainingCard(image = Icons.Filled.Build),
+    Session(image = Icons.Filled.Check),
     // TRAINER
     CustomerDetail(image = Icons.Default.Person),
     CustomerWorkouts(image = Icons.Default.List),

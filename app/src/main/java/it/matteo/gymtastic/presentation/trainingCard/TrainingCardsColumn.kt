@@ -24,7 +24,9 @@ import it.matteo.gymtastic.presentation.Screens
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun TrainingCardsColumn(list: List<TrainingCardModel>, navHostController: NavHostController) {
-    Column( modifier = Modifier.fillMaxSize().padding(bottom = 56.dp),
+    Column( modifier = Modifier
+        .fillMaxSize()
+        .padding(bottom = 56.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ){
@@ -64,7 +66,7 @@ fun TrainingCardsColumn(list: List<TrainingCardModel>, navHostController: NavHos
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = card.createdAt.toLocalDate().toString(),
+                            text = "Workout n°${list.indexOf(card) + 1}",
                             style = MaterialTheme.typography.body2
                         )
                         Text(text = "Created the ${card.createdAt.toLocalDate()}")

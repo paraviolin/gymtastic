@@ -2,6 +2,8 @@ package it.matteo.gymtastic.domain.utils
 
 import com.google.firebase.Timestamp
 import it.matteo.gymtastic.data.session.entity.SessionEntity
+import it.matteo.gymtastic.data.session.entity.SessionExerciseEntity
+import it.matteo.gymtastic.domain.session.model.SessionExerciseModel
 import it.matteo.gymtastic.domain.session.model.SessionModel
 import java.time.LocalDateTime
 
@@ -19,5 +21,13 @@ object SessionConverter {
         userId = model.userId,
         trainingCardId = model.trainingId,
         createdAt = Timestamp.now()
+    )
+
+    fun toExerciseEntity(model: SessionExerciseModel, sessionId: String) = SessionExerciseEntity(
+        id = model.id,
+        sessionId = sessionId,
+        completed = model.completed,
+        exerciseId = model.exerciseId,
+        note = model.note
     )
 }

@@ -23,6 +23,7 @@ import it.matteo.gymtastic.domain.exercise.model.ExerciseModel
 import it.matteo.gymtastic.domain.exercise.model.ExerciseType
 import it.matteo.gymtastic.presentation.common.OutlinedStyledButton
 import it.matteo.gymtastic.presentation.customer.viewModel.CustomerViewModel
+import it.matteo.gymtastic.presentation.exercise.DropDownList
 import it.matteo.gymtastic.presentation.profile.components.BasicTextField
 import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 
@@ -85,10 +86,6 @@ fun CustomerWorkoutCreationScreen(navHostController: NavHostController, customer
 
                         val text = remember { mutableStateOf(ex.name) } // initial value
 
-                        val openCloseOfDropDownList: (Boolean) -> Unit = {
-                            isOpen.value = it
-                            hasEnteredExercises.value = true
-                        }
                         val userSelectedString: (ExerciseModel) -> Unit = { exerciseModel ->
                             val current = addedExercises.value.find { it.id == ex.id }
                             val currentList = addedExercises.value.toMutableList()
@@ -96,6 +93,10 @@ fun CustomerWorkoutCreationScreen(navHostController: NavHostController, customer
                             currentList.add(exerciseModel)
                             addedExercises.value = currentList
                             text.value = exerciseModel.name
+                        }
+                        val openCloseOfDropDownList: (Boolean) -> Unit = {
+                            isOpen.value = it
+                            hasEnteredExercises.value = addedExercises.value.count { exerciseModel -> exerciseModel.id.isEmpty() } == 1
                         }
 
                         BasicTextField(
@@ -107,7 +108,7 @@ fun CustomerWorkoutCreationScreen(navHostController: NavHostController, customer
                             requestToOpen = isOpen.value,
                             list = availableExercises.value,
                             openCloseOfDropDownList,
-                            userSelectedString
+                            userSelectedString,
                         )
                         Spacer(
                             modifier = Modifier
@@ -134,6 +135,7 @@ fun CustomerWorkoutCreationScreen(navHostController: NavHostController, customer
                     )
                 )
                 addedExercises.value = currList
+                hasEnteredExercises.value = false
             }, textLabel = "+")
             OutlinedStyledButton(
                 onClick = {
@@ -175,7 +177,7 @@ fun DropDownList(
             ) {
                 Text(
                     text = "${exerciseModel.name} - ${exerciseModel.duration}",
-                    modifier = Modifier.wrapContentWidth(),
+                    modifier = Modifier.wrapContentWidth().padding(horizontal = 16.dp),
                     style = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary)
                 )
             }

@@ -43,7 +43,7 @@ class TrainingCardService @Inject constructor(
             trainingCardModels.add(TrainingCardConverter.toModel(getExerciseList(card), card))
         }
 
-        return trainingCardModels
+        return trainingCardModels.sortedBy { it.createdAt }.reversed()
     }
 
     private suspend fun getExerciseList(trainingCard: TrainingCardEntity): List<ExerciseModel> {
