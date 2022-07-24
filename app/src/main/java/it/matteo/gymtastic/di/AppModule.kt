@@ -19,6 +19,7 @@ import it.matteo.gymtastic.data.trainingCard.TrainingCardRepository
 import it.matteo.gymtastic.data.trainingCard.TrainingCardRepositoryImpl
 import it.matteo.gymtastic.data.user.UserRepository
 import it.matteo.gymtastic.data.user.UserRepositoryImpl
+import it.matteo.gymtastic.domain.session.SessionService
 import it.matteo.gymtastic.domain.trainingCard.TrainingCardService
 import it.matteo.gymtastic.domain.user.UserService
 
@@ -60,4 +61,11 @@ object AppModule {
     @Provides
     fun provideSessionExerciseRepository(firestore: FirebaseFirestore): SessionExerciseRepository =
         SessionExerciseRepositoryImpl(firestore)
+
+    @Provides
+    fun provideSessionService(
+        sessionRepository: SessionRepository,
+        sessionExerciseRepository: SessionExerciseRepository
+    ): SessionService =
+        SessionService(sessionRepository, sessionExerciseRepository)
 }
