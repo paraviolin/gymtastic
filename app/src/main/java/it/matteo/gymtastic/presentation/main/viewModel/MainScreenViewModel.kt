@@ -32,9 +32,8 @@ class MainScreenViewModel @Inject constructor(
     var trainingCards = mutableStateOf(listOf<TrainingCardModel>())
         private set
 
-    private val _lastTrainingCard = MutableLiveData<TrainingCardModel>()
-    val lastTrainingCard: TrainingCardModel?
-        get() = _lastTrainingCard.value!!
+    var lastTrainingCard = mutableStateOf<TrainingCardModel?>(null)
+        private set
 
     private val _currentTrainingCard = MutableLiveData<TrainingCardModel>()
     val currentTrainingCard: TrainingCardModel?
@@ -55,7 +54,6 @@ class MainScreenViewModel @Inject constructor(
     var customers = mutableStateOf(listOf<UserModel>())
         private set
 
-    @JvmName("getTrainingCards1")
     fun fetchTrainingCards() {
         viewModelScope.launch {
             auth.currentUser?.let {
@@ -69,13 +67,12 @@ class MainScreenViewModel @Inject constructor(
         }
     }
 
-    // todo use it in main screen
-    fun getLastTrainingCard() {
+    fun fetchLastTrainingCard() {
         viewModelScope.launch {
             user.value = userService.getUserByEmail(auth.currentUser!!.email!!)
             _loadingState.tryEmit(LoadingState.LOADING)
-            val result = trainingCardService.getLastTrainingCard(user.value!!.name)
-            _lastTrainingCard.postValue(result)
+            val result = trainingCardService.getLastTrainingCard(user.value!!.id)
+            lastTrainingCard.value = result
             _loadingState.tryEmit(LoadingState.LOADED)
         }
     }

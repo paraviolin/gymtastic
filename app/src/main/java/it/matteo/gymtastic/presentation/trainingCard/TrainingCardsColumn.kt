@@ -64,7 +64,7 @@ fun TrainingCardsColumn(list: List<TrainingCardModel>, navHostController: NavHos
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = card.id,
+                            text = card.createdAt.toLocalDate().toString(),
                             style = MaterialTheme.typography.body2
                         )
                         Text(text = "Created the ${card.createdAt.toLocalDate()}")

@@ -25,11 +25,13 @@ class TrainingCardService @Inject constructor(
     }
 
     suspend fun getLastTrainingCard(userId: String): TrainingCardModel? {
-        val trainingCard = trainingCardRepository.getLastTrainingCard(userId).first() ?: return null
+        val trainingCards = trainingCardRepository.getAllTrainingCards(userId).first() ?: return null
 
-        val exercises = getExerciseList(trainingCard)
+        val lastTrainingCard = trainingCards.maxByOrNull { it.createdAt }!!
 
-        return TrainingCardConverter.toModel(exercises, trainingCard)
+        val exercises = getExerciseList(lastTrainingCard)
+
+        return TrainingCardConverter.toModel(exercises, lastTrainingCard)
     }
 
     suspend fun getAllTrainingCards(userId: String): List<TrainingCardModel> {

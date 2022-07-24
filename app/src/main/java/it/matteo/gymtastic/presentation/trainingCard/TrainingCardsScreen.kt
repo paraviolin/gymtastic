@@ -26,7 +26,7 @@ fun TrainingCardsScreen(
         LoadingState.LOADING -> LoaderComponent()
         LoadingState.LOADED -> Scaffold(bottomBar = { BottomNavigationBar(navHostController = navHostController, !mainScreenViewModel.isTrainer()) }) {
             TrainingCardsColumn(
-                list = mainScreenViewModel.trainingCards.value,
+                list = mainScreenViewModel.trainingCards.value.sortedBy { it.createdAt }.reversed(),
                 navHostController = navHostController
             )
         }

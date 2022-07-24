@@ -45,10 +45,14 @@ fun MainScreen(
         mutableStateOf(mainScreenViewModel.trainingCards)
     }
 
+    val lastTrainingCard by remember {
+        mutableStateOf(mainScreenViewModel.lastTrainingCard)
+    }
+
     if (mainScreenViewModel.isTrainer()) {
         mainScreenViewModel.fetchCustomers()
     } else {
-        mainScreenViewModel.fetchTrainingCards()
+        mainScreenViewModel.fetchLastTrainingCard()
     }
 
     Scaffold(bottomBar = { BottomNavigationBar(navHostController, !mainScreenViewModel.isTrainer()) }) {
@@ -83,9 +87,8 @@ fun MainScreen(
 
                     if (mainScreenViewModel.isTrainer()) {
                       CustomerList(customers = customers.value, navHostController = navHostController)
-                    } else if (trainingCards.value.isNotEmpty()) {
-                        val lastTrainingCardModel = trainingCards.value.first()
-                        lastTrainingCardModel.let { card ->
+                    } else  {
+                        lastTrainingCard.value?.let { card ->
                             Text(text = "Created ${card.createdAt.toLocalDate()}")
                             WorkoutList(card = card, navHostController = navHostController)
                         }

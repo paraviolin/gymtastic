@@ -57,21 +57,28 @@ fun ExercisesScreen(navHostController: NavHostController, isCustomer: Boolean? =
                 }
             }
         )
-    }, bottomBar =  { BottomNavigationBar(navHostController = navHostController, isCustomer == true) }
-        ,floatingActionButton = {
-        FloatingActionButton(
-            modifier = Modifier.padding(bottom = 48.dp),
-            backgroundColor = Color.Transparent,
-            onClick = { navHostController.navigate(Screens.CreateExercise.name) }) {
-            Icon(
-                Icons.TwoTone.Add,
-                contentDescription = "Add training card",
-                modifier = Modifier.fillMaxSize(0.07f),
-                tint = MaterialTheme.colors.secondary
-            )
-        }
     },
-        isFloatingActionButtonDocked = true, floatingActionButtonPosition = FabPosition.End
+        bottomBar = {
+            BottomNavigationBar(
+                navHostController = navHostController,
+                isCustomer == true
+            )
+        },
+        floatingActionButton = {
+            FloatingActionButton(
+                modifier = Modifier.padding(bottom = 48.dp),
+                backgroundColor = Color.Transparent,
+                onClick = { navHostController.navigate(Screens.CreateExercise.name) }) {
+                Icon(
+                    Icons.TwoTone.Add,
+                    contentDescription = "Add training card",
+                    modifier = Modifier.fillMaxSize(0.07f),
+                    tint = MaterialTheme.colors.secondary
+                )
+            }
+        },
+        isFloatingActionButtonDocked = true,
+        floatingActionButtonPosition = FabPosition.End
     ) {
         Column(
             modifier = Modifier.fillMaxSize(),
