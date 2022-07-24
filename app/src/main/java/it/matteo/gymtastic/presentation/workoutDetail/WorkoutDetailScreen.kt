@@ -54,7 +54,6 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
             }
         )
     }) {
-
         when (state) {
             LoadingState.LOADING -> LoaderComponent()
             LoadingState.LOADED ->
@@ -68,7 +67,6 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
                         modifier = Modifier.padding(top = 16.dp),
                         style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.Bold),
                     )
-
 
                     Row(
                         horizontalArrangement = Arrangement.SpaceEvenly,
@@ -103,11 +101,17 @@ fun WorkoutDetailScreen(navHostController: NavHostController, exerciseId: String
                         )
 
                     notes?.let { exerciseNotes ->
+                        Text(
+                            text = "Notes",
+                            modifier = Modifier.padding(top = 16.dp),
+                            style = MaterialTheme.typography.h5.copy(fontWeight = FontWeight.Bold),
+                        )
+                        val filteredNotes = exerciseNotes.filterNot { it.id.isEmpty() }
                         LazyColumn {
-                            items(exerciseNotes, itemContent = {
+                            items(filteredNotes, itemContent = {
                                 TextFieldComponent(
                                     content = it.note,
-                                    labelName = "Note",
+                                    labelName = it.createdAt?.toLocalDate().toString(),
                                     labelFontSize = 16.sp,
                                     onValueChange = {},
                                     modifier = Modifier.padding(horizontal = 32.dp),

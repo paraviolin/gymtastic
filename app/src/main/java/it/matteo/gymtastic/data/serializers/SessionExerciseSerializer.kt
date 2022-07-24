@@ -9,7 +9,7 @@ object SessionExerciseSerializer {
             "exerciseId" to sessionExerciseEntity.exerciseId,
             "completed" to sessionExerciseEntity.completed,
             "note" to sessionExerciseEntity.note,
-            "sessionId" to sessionExerciseEntity.id
+            "sessionId" to sessionExerciseEntity.sessionId
         )
     }
 

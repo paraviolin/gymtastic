@@ -31,7 +31,7 @@ fun TrainingCardsColumn(list: List<TrainingCardModel>, navHostController: NavHos
         horizontalAlignment = Alignment.CenterHorizontally
     ){
         Text(
-            text = "TRAINING CARD HISTORY",
+            text = "WORKOUTS HISTORY",
             modifier = Modifier.padding(vertical = 16.dp),
             style = MaterialTheme.typography.h4.copy(fontWeight = FontWeight.ExtraLight),
         )

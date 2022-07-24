@@ -79,7 +79,7 @@ fun MainScreen(
                     val subtitle = if (mainScreenViewModel.isTrainer()) {
                         "CUSTOMERS"
                     } else {
-                        "YOUR TRAINING CARD"
+                        "YOUR WORKOUT"
                     }
                     if (!mainScreenViewModel.isTrainer()) {
                         Row(

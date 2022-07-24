@@ -15,13 +15,15 @@ import kotlinx.coroutines.flow.first
 import java.time.LocalDateTime
 import java.util.*
 import javax.inject.Inject
+
 class SessionService @Inject constructor(
     private val sessionRepository: SessionRepository,
     private val sessionExerciseRepository: SessionExerciseRepository
 ) {
     fun createSession(userId: String, trainingId: String, list: List<SessionExerciseModel>) {
+        val sessionId = UUID.randomUUID().toString()
         val session = SessionModel(
-            id = UUID.randomUUID().toString(),
+            id = sessionId,
             userId = userId,
             trainingId = trainingId,
             createdAt = LocalDateTime.now()
@@ -31,7 +33,7 @@ class SessionService @Inject constructor(
             sessionExerciseRepository.addSessionExercise(
                 SessionConverter.toExerciseEntity(
                     it,
-                    session.id
+                    sessionId
                 )
             )
         }
@@ -55,19 +57,22 @@ class SessionService @Inject constructor(
     suspend fun getSessionExercise(exerciseId: String): SessionExerciseEntity? =
         sessionExerciseRepository.getSessionExercise(exerciseId).first()
 
-    suspend fun getSessionExercises(exerciseId: String, userId: String): MutableList<SessionExerciseModel> {
+    suspend fun getSessionExercises(
+        exerciseId: String,
+        userId: String
+    ): MutableList<SessionExerciseModel> {
         val session = sessionRepository.getAllSessions(userId).first()
 
         val exercises = mutableListOf<SessionExerciseModel>()
 
         session.forEach {
-
             val rawValue =
-                sessionExerciseRepository.getAllSessionExercises(exerciseId, userId).first() // TODO FIX ME
-
-
-            rawValue.forEach {
-                exercises.add(SessionConverter.toExerciseModel(it))
+                sessionExerciseRepository.getAllSessionExercises(exerciseId, it.id)
+                    .first() // TODO FIX ME
+            rawValue.forEach { filterSession ->
+                val exercise = SessionConverter.toExerciseModel(filterSession).copy(createdAt = TrainingCardConverter.convertToLocalDateTimeViaMillisecond(it.createdAt.toDate())
+                    ?: LocalDateTime.now())
+                exercises.add(exercise)
             }
         }
 
