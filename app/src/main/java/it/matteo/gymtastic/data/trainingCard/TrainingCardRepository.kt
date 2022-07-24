@@ -1,6 +1,5 @@
 package it.matteo.gymtastic.data.trainingCard
 
-import it.matteo.gymtastic.data.Response
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -13,5 +12,5 @@ interface TrainingCardRepository {
 
     suspend fun getAllTrainingCards(userId: String): Flow<List<TrainingCardEntity>>
 
-    suspend fun deleteTrainingCard(id: String): Flow<Response<Void?>>
+    suspend fun deleteTrainingCard(id: String): Flow<Void?>
 }

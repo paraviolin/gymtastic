@@ -1,6 +1,5 @@
 package it.matteo.gymtastic.data.exercise
 
-import it.matteo.gymtastic.data.Response
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 import kotlinx.coroutines.flow.Flow
 
@@ -13,6 +12,6 @@ interface ExerciseRepository {
 
     fun updateExercise(exerciseEntity: ExerciseEntity)
 
-    suspend fun deleteExercise(exerciseEntity: ExerciseEntity): Flow<Response<Void?>>
+    suspend fun deleteExercise(exerciseEntity: ExerciseEntity): Flow<Void?>
 
 }

@@ -1,17 +1,14 @@
 package it.matteo.gymtastic.data.trainingCard
 
+import androidx.compose.runtime.snapshots.SnapshotApplyResult
 import com.google.firebase.firestore.FirebaseFirestore
-import it.matteo.gymtastic.data.Response
-import it.matteo.gymtastic.data.Response.*
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.trainingCard.entity.TrainingCardEntity
 import it.matteo.gymtastic.data.utils.serializers.TrainingCardSerializer
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import kotlin.Error
 
 class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) :
     TrainingCardRepository {
@@ -79,17 +76,13 @@ class TrainingCardRepositoryImpl @Inject constructor(private val db: FirebaseFir
 
         }
 
-    override suspend fun deleteTrainingCard(id: String) = flow<Response<Void?>> {
-        emit(Loading)
-        val result = db.collection(_trainingCardDocumentName)
+    override suspend fun deleteTrainingCard(id: String) = callbackFlow<Void?> {
+        db.collection(_trainingCardDocumentName)
             .document(id)
             .delete()
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
-            .result
-        emit(Success(result))
-
     }
 
 }

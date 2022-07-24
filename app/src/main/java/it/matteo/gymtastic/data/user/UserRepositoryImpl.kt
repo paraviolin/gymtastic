@@ -1,13 +1,11 @@
 package it.matteo.gymtastic.data.user
 
+import androidx.compose.runtime.snapshots.SnapshotApplyResult
 import com.google.firebase.firestore.FirebaseFirestore
-import it.matteo.gymtastic.data.Response
-import it.matteo.gymtastic.data.Response.*
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.user.entity.UserEntity
 import it.matteo.gymtastic.data.utils.serializers.UserSerializer
 import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -26,18 +24,13 @@ class UserRepositoryImpl @Inject constructor(private val db: FirebaseFirestore) 
             }
     }
 
-    override suspend fun deleteUser(userEntity: UserEntity) = flow<Response<Void?>> {
-        emit(Loading)
-
-        val result = db.collection(_userDocumentName)
+    override suspend fun deleteUser(userEntity: UserEntity) = callbackFlow<Void?> {
+        db.collection(_userDocumentName)
             .document(userEntity.id)
             .delete()
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
-            .result
-
-        emit(Success(result))
     }
 
     override fun updateUser(userEntity: UserEntity) = addUser(userEntity)

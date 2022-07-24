@@ -1,7 +1,6 @@
 package it.matteo.gymtastic.data.exercise
 
 import com.google.firebase.firestore.FirebaseFirestore
-import it.matteo.gymtastic.data.Response
 import it.matteo.gymtastic.data.exceptions.FirebaseConnectionException
 import it.matteo.gymtastic.data.exercise.entity.ExerciseEntity
 import it.matteo.gymtastic.data.utils.serializers.ExerciseSerializer
@@ -61,15 +60,13 @@ class ExerciseRepositoryImpl @Inject constructor(private val db: FirebaseFiresto
     override fun updateExercise(exerciseEntity: ExerciseEntity) =
         addExercise(exerciseEntity)
 
-    override suspend fun deleteExercise(exerciseEntity: ExerciseEntity) = flow<Response<Void?>> {
-        val result = db.collection(_exerciseDocumentName)
+    override suspend fun deleteExercise(exerciseEntity: ExerciseEntity) = callbackFlow<Void?> {
+        db.collection(_exerciseDocumentName)
             .document(exerciseEntity.id)
             .delete()
             .addOnFailureListener {
                 throw FirebaseConnectionException()
             }
-            .result
-        emit(Response.Success(result))
     }
 
 
