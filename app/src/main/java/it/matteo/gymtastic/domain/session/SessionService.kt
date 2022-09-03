@@ -68,14 +68,13 @@ class SessionService @Inject constructor(
         session.forEach {
             val rawValue =
                 sessionExerciseRepository.getAllSessionExercises(exerciseId, it.id)
-                    .first() // TODO FIX ME
+                    .first()
             rawValue.forEach { filterSession ->
                 val exercise = SessionConverter.toExerciseModel(filterSession).copy(createdAt = TrainingCardConverter.convertToLocalDateTimeViaMillisecond(it.createdAt.toDate())
                     ?: LocalDateTime.now())
                 exercises.add(exercise)
             }
         }
-
 
         return exercises
     }

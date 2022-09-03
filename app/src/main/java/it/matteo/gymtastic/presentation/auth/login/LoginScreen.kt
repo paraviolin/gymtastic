@@ -8,7 +8,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import it.matteo.gymtastic.R
@@ -24,26 +23,12 @@ fun LoginScreen(navHostController: NavHostController) {
     val authViewModel: AuthViewModel = viewModel()
     val state by authViewModel.loadingState.collectAsState()
     AuthScreen(
-        navHostController = navHostController,
         title = stringResource(id = R.string.welcome),
         onSubmit = { username, password ->
             authViewModel.login(username, password)
         },
         outlinedButtonText = stringResource(
             id = R.string.login
-        ), buttonTextContent = listOf(
-           /* Pair(
-                stringResource(id = R.string.register)
-            ) {
-                navHostController.navigate(Screens.Signup.name)
-            },
-            Pair(
-                stringResource(
-                    id = R.string.forgotPassword
-                )
-            ) {
-                navHostController.navigate(Screens.ForgotPassword.name)
-            },*/
         )
     )
     when {

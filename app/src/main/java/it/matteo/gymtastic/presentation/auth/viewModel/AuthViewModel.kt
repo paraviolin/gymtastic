@@ -37,7 +37,6 @@ class AuthViewModel @Inject constructor() : ViewModel() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     _user.value = auth.currentUser
-                    // todo register the user to firestore
                     _loadingState.tryEmit(LoadingState.LOADED)
                 }
             }

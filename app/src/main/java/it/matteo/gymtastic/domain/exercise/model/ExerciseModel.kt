@@ -1,7 +1,5 @@
 package it.matteo.gymtastic.domain.exercise.model
 
-import kotlin.time.Duration
-
 enum class ExerciseType {
     Aerobic,
     Anaerobic
