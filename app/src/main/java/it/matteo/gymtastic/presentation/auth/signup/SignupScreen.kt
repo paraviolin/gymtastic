@@ -1,15 +1,9 @@
 package it.matteo.gymtastic.presentation.auth.signup
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -26,24 +20,10 @@ fun SignupScreen(navHostController: NavHostController) {
     val authViewModel: AuthViewModel = viewModel()
     val state by authViewModel.loadingState.collectAsState()
     AuthScreen(
-        navHostController = navHostController,
         title = stringResource(id = R.string.register),
         onSubmit = authViewModel::signUp,
         outlinedButtonText = stringResource(
             id = R.string.register
-        ), buttonTextContent = listOf(
-            Pair(
-                stringResource(
-                    id = R.string.forgotPassword
-                )
-            ) {
-                navHostController.navigate(Screens.ForgotPassword.name)
-            },
-            Pair(
-                stringResource(id = R.string.login)
-            ) {
-                navHostController.navigate(Screens.Login.name)
-            }
         )
     )
     when {

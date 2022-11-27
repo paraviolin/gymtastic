@@ -13,5 +13,4 @@ interface ExerciseRepository {
     fun updateExercise(exerciseEntity: ExerciseEntity)
 
     suspend fun deleteExercise(exerciseEntity: ExerciseEntity): Flow<Void?>
-
 }

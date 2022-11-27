@@ -16,8 +16,7 @@ import javax.inject.Inject
 class ProfileViewModel @Inject constructor(private val userService: UserService) : ViewModel() {
     var userProfile = mutableStateOf<UserModel?>(null)
 
-    private var _loadingState: MutableStateFlow<LoadingState> =
-        MutableStateFlow(LoadingState.LOADING)
+    private var _loadingState: MutableStateFlow<LoadingState> = MutableStateFlow(LoadingState.LOADING)
     val loadingState = _loadingState.asStateFlow()
 
     fun updateUserProfile(email: String) {

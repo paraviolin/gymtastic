@@ -23,11 +23,9 @@ import it.matteo.gymtastic.presentation.profile.components.TextFieldComponent
 
 @Composable
 fun AuthScreen(
-    navHostController: NavHostController,
     title: String,
     onSubmit: (String, String) -> Unit,
     outlinedButtonText: String,
-    buttonTextContent: List<Pair<String, () -> Unit>>,
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -90,28 +88,6 @@ fun AuthScreen(
                 shape = MaterialTheme.shapes.medium
             ) {
                 Text(text = outlinedButtonText, style = MaterialTheme.typography.body2.copy(color = MaterialTheme.colors.primary))
-            }
-            Row(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(bottom = 8.dp),
-                verticalAlignment = Alignment.Top
-            ) {
-
-/*                OutlinedStyledButton(
-                    modifier = Modifier.padding(end = 16.dp),
-                    onClick = {
-                        navHostController.navigate(Screens.Login.name)
-                    },
-                    textLabel = stringResource(id = R.string.login),
-                    textLabelStyle = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary),
-                )
-
-                OutlinedStyledButton(
-                    onClick = { buttonTextContent[1].second() },
-                    textLabel = buttonTextContent[1].first,
-                    textLabelStyle = MaterialTheme.typography.body1.copy(MaterialTheme.colors.secondary)
-                )*/
             }
         }
     }
